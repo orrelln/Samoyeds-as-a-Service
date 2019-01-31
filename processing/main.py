@@ -1,5 +1,5 @@
 import asyncio
-from processing.networks import InceptionNetwork, QueueItem
+from networks import InceptionNetwork, QueueItem
 from quart import Quart
 
 
