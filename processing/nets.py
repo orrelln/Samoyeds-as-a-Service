@@ -5,18 +5,6 @@ import numpy as np
 import time
 
 
-
-import os
-os.environ['KMP_DUPLICATE_LIB_OK']='True'
-
-
-class QueueItem:
-    def __init__(self, image: np.ndarray, idx: int):
-        self.image = image
-        self.id = idx
-        self.predictions = {}
-
-
 class ImageNetNetwork:
     def __init__(self, name: str, return_queue: asyncio.Queue, lock: asyncio.Lock):
         classifier, preprocess_input = Classifiers.get(name)

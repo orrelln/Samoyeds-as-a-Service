@@ -1,7 +1,7 @@
 import pika
 import logging
 
-f = open("samoyed.jpg", "rb")
+f = open("j.jpg", "rb")
 i = f.read()
 
 logging.basicConfig()
