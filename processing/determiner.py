@@ -1,17 +1,24 @@
-from processing.data import QueueItem
-
-dogs = ['Samoyed', 'Eskimo_dog', 'Siberian_husky']
+from processing.dogs import dogs
 
 
-class Determiner:
-    def __init__(self, net_count: int):
-        self.net_count = net_count
-        self.predictions = {}
-        self.dogs = dogs
+def add(predictions: dict, new: dict):
+    for prediction, value in new.items():
+        if value in dogs:
+            predictions.setdefault(prediction, []).append(value)
 
-    def add(self, result: QueueItem):
-        for prediction, value in result.predictions.items():
-            if prediction in self.dogs:
-                self.predictions.setdefault(result.idx, {}).setdefault(prediction, []).append(value)
 
+def average(predictions: dict):
+    averages = []
+    for prediction, values in predictions.items():
+        averages.append((prediction, sum(values) / len(values)))
+    return sorted(averages, reverse=True, key=lambda v: v[1])
+
+
+def combine_dictionaries(list_predictions: [dict]):
+    combined = {}
+    for predictions in list_predictions:
+        for prediction, value in predictions.items():
+            if prediction in dogs:
+                combined.setdefault(prediction, []).append(value)
+    return combined
 
