@@ -1,4 +1,4 @@
-from processing.dogs import dogs
+from dogs import dogs
 
 
 def add(predictions: dict, new: dict):

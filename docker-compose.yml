@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+    rabbitmq-server:
+        image: rabbitmq
+        command: rabbitmq-server
+        expose:
+          - "5672"
+          - "15672"
+
+    processing:
+        build: ./processing
+        depends_on:
+          - rabbitmq-server
+
+        tty: true
+        environment:
+          - MODE=production
+        volumes:
+            - './processing:/processing'
+
+    api:
+        build: ./api
+        depends_on:
+          - rabbitmq-server
+        tty: true
+        volumes:
+          - './api:/api'
+
+volumes:
+    processing:
+    api:

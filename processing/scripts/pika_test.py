@@ -3,8 +3,6 @@ import logging
 import uuid
 import json
 import base64
-import time
-from io import BytesIO
 import imghdr
 from os import walk
 

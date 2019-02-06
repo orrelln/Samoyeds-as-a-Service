@@ -1,7 +1,6 @@
 from keras.applications.imagenet_utils import decode_predictions
 from classification_models import Classifiers
 import numpy as np
-from skimage.transform import resize
 
 
 class ImageNetNetwork:
@@ -12,12 +11,7 @@ class ImageNetNetwork:
         self.size = size
 
     def classify(self, image: np.ndarray):
-        image = resize(image, (self.size, self.size)) * 255
         image = self.preprocess_input(image)
         image = np.expand_dims(image, 0)
         results = decode_predictions(self.model.predict(image))[0]
-
-        predictions = {}
-        for result in results:
-            predictions[result[1]] = result[2]
-        return predictions
+        return {result[1]: result[2] for result in results}
