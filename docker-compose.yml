@@ -1,33 +1,52 @@
 version: '3.6'
-
 services:
-    rabbitmq-server:
-        image: rabbitmq
-        command: rabbitmq-server
-        expose:
-          - "5672"
-          - "15672"
-
-    processing:
-        build: ./processing
-        depends_on:
-          - rabbitmq-server
-        restart: always
-        tty: true
-        environment:
-          - MODE=testing
-        volumes:
-            - './processing:/processing'
-
-    api:
-        build: ./api
-        depends_on:
-          - rabbitmq-server
-        restart: always
-        tty: true
-        volumes:
-          - './api:/api'
-
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/postgres
+      - ./db-init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  rabbitmq-server:
+    image: rabbitmq
+    command: rabbitmq-server
+    expose:
+      - "5672"
+      - "15672"
+  processing:
+    build: ./processing
+    restart: always
+    depends_on:
+      - rabbitmq-server
+    tty: true
+    volumes:
+      - './processing:/processing'
+    environment:
+      - MODE=testing
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - rabbitmq-server
+    tty: true
+    volumes:
+      - './api:/api'
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 volumes:
-    processing:
-    api:
+  db-data:
+    driver: local
+  processing:
+  api:
