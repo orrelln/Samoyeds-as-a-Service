@@ -1,27 +1,31 @@
-import numpy
 import pika
 import os
-import base64
 import json
-import io
+import numpy as np
 from keras import backend as K
-from PIL import Image
 
 from nets import ImageNetNetwork
 from determiner import combine_dictionaries, average
+from image import convert
 
 
-K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)))
+K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=1,
+                                                   inter_op_parallelism_threads=1)))
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+IMAGE_SIZE = 224
 MODE = os.getenv('MODE', 'testing')
 
 if MODE == 'production':
     print('===  Production')
-    NETWORKS = [('seresnet50', 224),('resnet101', 224), ('densenet169', 224), ('mobilenet', 224), ('resnet34', 224)]
+    NETWORKS = [('seresnet50', IMAGE_SIZE),
+                ('resnet101', IMAGE_SIZE),
+                ('densenet169', IMAGE_SIZE),
+                ('mobilenet', IMAGE_SIZE),
+                ('resnet34', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
 else:
     print('===  Testing')
-    NETWORKS = [('mobilenet', 224)]
+    NETWORKS = [('mobilenet', IMAGE_SIZE)]
     HOST = '127.0.0.1'
 
 print('===  Initializing/Downloading Networks')
@@ -35,20 +39,24 @@ channel.queue_declare(queue='return_queue', durable=True)
 
 def process(ch, method, properties, body):
     data = json.loads(body)
-    image = base64.decodebytes(data['image'].encode('utf-8'))
-    image = Image.open(io.BytesIO(image))
-    image = image.resize((224, 224), Image.ANTIALIAS)
-    image = numpy.array(image)
+    image = convert(data['image'], IMAGE_SIZE)
+    predictions = []
 
-    list_predictions = []
-    for network in image_networks:
-        list_predictions.append(network.classify(image.copy()))
+    if image:
+        image = np.array(image)
+        list_predictions = []
+        for network in image_networks:
+            list_predictions.append(network.classify(image.copy()))
 
-    predictions = average(combine_dictionaries(list_predictions))
+        predictions = average(combine_dictionaries(list_predictions))
+        image_error = False
+    else:
+        image_error = True
 
     data = {
         'predictions': predictions,
-        'idx': data['idx']
+        'idx': data['idx'],
+        'image_error': image_error
     }
 
     message = json.dumps(data)
