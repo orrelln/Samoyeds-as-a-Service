@@ -11,7 +11,6 @@ from nets import ImageNetNetwork
 from determiner import combine_dictionaries, average
 
 
-
 K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)))
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 MODE = os.getenv('MODE', 'testing')

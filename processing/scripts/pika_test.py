@@ -28,7 +28,6 @@ print(channel.queue_declare(queue='task_queue', durable=True))
 for image in images:
     data = {
         'image': image[0],
-        'filename': image[1],
         'idx': str(uuid.uuid4())
     }
     message = json.dumps(data)
