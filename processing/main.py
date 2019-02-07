@@ -13,7 +13,7 @@ K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=
                                                    inter_op_parallelism_threads=1)))
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 IMAGE_SIZE = 224
-MODE = os.getenv('MODE', 'testing')
+MODE = os.getenv('MODE', 'local')
 
 if MODE == 'production':
     print('===  Production')
@@ -23,10 +23,14 @@ if MODE == 'production':
                 ('mobilenet', IMAGE_SIZE),
                 ('resnet34', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
-else:
+elif MODE == 'testing':
+    import scripts.pika_test
     print('===  Testing')
     NETWORKS = [('mobilenet', IMAGE_SIZE)]
+    HOST = 'rabbitmq-server'
+else:
     HOST = '127.0.0.1'
+
 
 print('===  Initializing/Downloading Networks')
 image_networks = [ImageNetNetwork(*network) for network in NETWORKS]
@@ -43,20 +47,20 @@ def process(ch, method, properties, body):
     predictions = []
 
     if image:
+        error = False
         image = np.array(image)
         list_predictions = []
         for network in image_networks:
             list_predictions.append(network.classify(image.copy()))
-
         predictions = average(combine_dictionaries(list_predictions))
-        image_error = False
     else:
-        image_error = True
+        error = True
 
     data = {
-        'predictions': predictions,
         'idx': data['idx'],
-        'image_error': image_error
+        'path': data['path'],
+        'predictions': predictions,
+        'error': error
     }
 
     message = json.dumps(data)

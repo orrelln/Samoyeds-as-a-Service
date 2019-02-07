@@ -5,6 +5,7 @@ import json
 import base64
 import imghdr
 from os import walk
+import os
 
 # images = []
 # for (dirpath, _, filenames) in walk('images/'):
@@ -13,23 +14,33 @@ from os import walk
 #             with open(dirpath + filename, 'rb') as f:
 #                 image = f.read()
 #                 images.append((base64.b64encode(image).decode('utf-8'), filename))
+MODE = os.getenv('MODE', 'local')
 
+if MODE == 'production':
+    HOST = 'rabbitmq-server'
+elif MODE == 'testing':
+    HOST = 'rabbitmq-server'
+else:
+    HOST = '127.0.0.1'
 
 f = open("samoyed.jpg", "rb")
 i = f.read()
 images = [(base64.b64encode(i).decode('utf-8'), 'samoyed.jpg')]
 
 logging.basicConfig()
-connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(HOST))
 channel = connection.channel()
 
-print(channel.queue_declare(queue='task_queue', durable=True))
+channel.queue_declare(queue='task_queue', durable=True)
 
 for image in images:
     data = {
         'image': image[0],
+        'path': image[1],
         'idx': str(uuid.uuid4())
     }
+
+    print("===  idx: " + data['idx'])
     message = json.dumps(data)
 
     channel.basic_publish(exchange='',

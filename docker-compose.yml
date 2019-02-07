@@ -12,10 +12,10 @@ services:
         build: ./processing
         depends_on:
           - rabbitmq-server
-
+        restart: always
         tty: true
         environment:
-          - MODE=production
+          - MODE=testing
         volumes:
             - './processing:/processing'
 
@@ -23,6 +23,7 @@ services:
         build: ./api
         depends_on:
           - rabbitmq-server
+        restart: always
         tty: true
         volumes:
           - './api:/api'

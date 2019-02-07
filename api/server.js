@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
+const worker = require('./worker');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -21,3 +22,6 @@ app.use('*', function (req, res) {
 app.listen(port, function() {
     console.log("== Server is running on port", port);
 });
+
+// Start worker queue
+worker.startQueue();
