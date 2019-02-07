@@ -45,6 +45,10 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGHOST: ${PGHOST}
+      PGUSER: ${POSTGRES_USER}
+      PGDATABASE: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
 volumes:
   db-data:
     driver: local
