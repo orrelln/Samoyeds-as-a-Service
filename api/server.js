@@ -2,13 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const worker = require('./worker');
-const { Pool } = require('pg');
-
 
 const app = express();
 const port = process.env.PORT || 8000;
 
-app.locals.pgPool = new Pool();
 
 // Utilize body-parser middleware to easily handle JSON
 app.use(bodyParser.json());

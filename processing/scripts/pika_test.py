@@ -37,10 +37,10 @@ for image in images:
     data = {
         'image': image[0],
         'path': image[1],
-        'idx': str(uuid.uuid4())
+        'id': str(uuid.uuid4())
     }
 
-    print("===  idx: " + data['idx'])
+    print("===  id: " + data['id'])
     message = json.dumps(data)
 
     channel.basic_publish(exchange='',

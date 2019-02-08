@@ -7,6 +7,7 @@ from keras import backend as K
 from nets import ImageNetNetwork
 from determiner import combine_dictionaries, average
 from image import convert
+from utils.profiler import process_timer
 
 
 K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=1,
@@ -29,6 +30,8 @@ elif MODE == 'testing':
     NETWORKS = [('mobilenet', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
 else:
+    print('===  Local')
+    NETWORKS = [('mobilenet', IMAGE_SIZE)]
     HOST = '127.0.0.1'
 
 
@@ -41,6 +44,7 @@ channel.queue_declare(queue='task_queue', durable=True)
 channel.queue_declare(queue='return_queue', durable=True)
 
 
+@process_timer
 def process(ch, method, properties, body):
     data = json.loads(body)
     image = convert(data['image'], IMAGE_SIZE)
@@ -57,11 +61,14 @@ def process(ch, method, properties, body):
         error = True
 
     data = {
-        'idx': data['idx'],
+        'id': data['id'],
         'path': data['path'],
-        'predictions': predictions,
         'error': error
     }
+
+    for i in range(5):
+        data['breed{}'.format(i+1)] = predictions[i][0] if len(predictions) > i else None
+        data['percentage{}'.format(i+1)] = predictions[i][1] if len(predictions) > i else 0
 
     message = json.dumps(data)
     channel.basic_publish(exchange='',
