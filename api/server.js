@@ -28,4 +28,4 @@ app.listen(port, function() {
 });
 
 // Start worker queue
-// worker.startQueue();
+worker.startQueue();
