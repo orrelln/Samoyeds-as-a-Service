@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
-const worker = require('./utils/worker');
+const rabbitmq = require('./utils/rabbitmq');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -24,5 +24,6 @@ app.listen(port, function() {
     console.log("== Server is running on port", port);
 });
 
-// Start worker queue
-worker.startQueue();
+// Starts rabbitmq stuff
+rabbitmq.initReturnChannel();
+rabbitmq.startWorkQueue();

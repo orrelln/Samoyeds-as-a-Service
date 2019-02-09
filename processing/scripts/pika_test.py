@@ -3,6 +3,7 @@ import logging
 import uuid
 import json
 import base64
+import time
 import imghdr
 from os import walk
 import os
@@ -11,9 +12,8 @@ import os
 # for (dirpath, _, filenames) in walk('images/'):
 #     for filename in filenames:
 #         if imghdr.what(dirpath + filename) in ['jpeg', 'jpeg', None]:
-#             with open(dirpath + filename, 'rb') as f:
-#                 image = f.read()
-#                 images.append((base64.b64encode(image).decode('utf-8'), filename))
+#             images.append(dirpath + filename)
+
 MODE = os.getenv('MODE', 'local')
 
 if MODE == 'production':
@@ -23,11 +23,10 @@ elif MODE == 'testing':
 else:
     HOST = '127.0.0.1'
 
-f = open("samoyed.jpg", "rb")
-i = f.read()
-images = [(base64.b64encode(i).decode('utf-8'), 'samoyed.jpg')]
+begin = time.process_time()
 
-logging.basicConfig()
+images = ['samoyed.jpg']
+
 connection = pika.BlockingConnection(pika.ConnectionParameters(HOST))
 channel = connection.channel()
 
@@ -35,8 +34,7 @@ channel.queue_declare(queue='task_queue', durable=True)
 
 for image in images:
     data = {
-        'image': image[0],
-        'path': image[1],
+        'path': image,
         'id': str(uuid.uuid4())
     }
 
@@ -52,3 +50,5 @@ for image in images:
 print("===  Sent images from images directory")
 
 connection.close()
+
+print(time.process_time() - begin)

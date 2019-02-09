@@ -30,6 +30,7 @@ services:
     tty: true
     volumes:
       - './processing:/processing'
+      - './api:/api'
     environment:
       WAIT_HOSTS: rabbitmq-server:5672
       MODE: testing

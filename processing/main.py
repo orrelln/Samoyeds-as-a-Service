@@ -25,7 +25,6 @@ if MODE == 'production':
                 ('resnet34', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
 elif MODE == 'testing':
-    import scripts.pika_test
     print('===  Testing')
     NETWORKS = [('mobilenet', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
@@ -46,7 +45,7 @@ channel.queue_declare(queue='return_queue', durable=True)
 
 def process(ch, method, properties, body):
     data = json.loads(body)
-    image = convert(data['image'], IMAGE_SIZE)
+    image = convert(data['path'], IMAGE_SIZE)
     predictions = []
 
     if image:
@@ -57,6 +56,9 @@ def process(ch, method, properties, body):
             list_predictions.append(network.classify(image.copy()))
         predictions = average(combine_dictionaries(list_predictions))
     else:
+        error = True
+
+    if len(predictions) == 0:
         error = True
 
     data = {
