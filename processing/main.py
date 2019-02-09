@@ -44,7 +44,6 @@ channel.queue_declare(queue='task_queue', durable=True)
 channel.queue_declare(queue='return_queue', durable=True)
 
 
-@process_timer
 def process(ch, method, properties, body):
     data = json.loads(body)
     image = convert(data['image'], IMAGE_SIZE)

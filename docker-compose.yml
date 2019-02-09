@@ -4,7 +4,7 @@ services:
     image: postgres:latest
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - db-data:/postgres
       - ./db-init:/docker-entrypoint-initdb.d
@@ -15,7 +15,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - "8080:8080"
   rabbitmq-server:
     image: rabbitmq
     command: rabbitmq-server
@@ -31,12 +31,13 @@ services:
     volumes:
       - './processing:/processing'
     environment:
-      - MODE=testing
+      WAIT_HOSTS: rabbitmq-server:5672
+      MODE: testing
   api:
     build: ./api
     restart: always
     ports:
-      - 8000:8000
+      - "8000:8000"
     depends_on:
       - rabbitmq-server
     tty: true
@@ -49,6 +50,7 @@ services:
       PGUSER: ${POSTGRES_USER}
       PGDATABASE: ${POSTGRES_USER}
       PGPASSWORD: ${POSTGRES_PASSWORD}
+      WAIT_HOSTS: db:5432, rabbitmq-server:5672
 volumes:
   db-data:
     driver: local
