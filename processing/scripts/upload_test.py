@@ -1,14 +1,14 @@
 import requests
+from requests_toolbelt import MultipartEncoder
+import imghdr
+
 
 url = "http://localhost:8000/upload"
 
-payload = "------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"1549610440964.png\"\r\nContent-Type: image/png\r\n\r\n\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--"
-headers = {
-    'content-type': "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-    'cache-control': "no-cache",
-    'Postman-Token': "810c4b9e-2e0a-4bd2-a1aa-c1b32edc79c0"
-    }
+m = MultipartEncoder(
+    fields={'photo': ('samoyed.jpg', open('samoyed.jpg', 'rb'), 'image/jpeg')}
+)
 
-response = requests.request("POST", url, data=payload, headers=headers)
+response = requests.request("POST", url, data=m, headers={'Content-Type': m.content_type})
 
 print(response.text)
