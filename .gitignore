@@ -1,3 +1,9 @@
 node_modules/
 .idea/
 .env
+api/scripts/photos
+processing/scripts/images
+api/scripts/samoyed.jpg
+processing/scripts/__pycache__/
+.DS_store
+__pycache__/

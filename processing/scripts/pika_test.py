@@ -8,11 +8,13 @@ import imghdr
 from os import walk
 import os
 
-# images = []
-# for (dirpath, _, filenames) in walk('images/'):
-#     for filename in filenames:
-#         if imghdr.what(dirpath + filename) in ['jpeg', 'jpeg', None]:
-#             images.append(dirpath + filename)
+images = []
+for (dirpath, _, filenames) in walk('images/'):
+    for filename in filenames:
+        if imghdr.what(dirpath + filename) in ['jpeg', 'jpeg', None]:
+            images.append('scripts/images/' + filename)
+
+#images = ['samoyed.jpg']
 
 MODE = os.getenv('MODE', 'local')
 
@@ -25,7 +27,7 @@ else:
 
 begin = time.process_time()
 
-images = ['samoyed.jpg']
+
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(HOST))
 channel = connection.channel()

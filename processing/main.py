@@ -7,30 +7,34 @@ from keras import backend as K
 from nets import ImageNetNetwork
 from determiner import combine_dictionaries, average
 from image import convert
-from utils.profiler import process_timer
+from utils.profiler import timer_avg
 
 
 K.set_session(K.tf.Session(config=K.tf.ConfigProto(intra_op_parallelism_threads=1,
                                                    inter_op_parallelism_threads=1)))
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 IMAGE_SIZE = 224
-MODE = os.getenv('MODE', 'local')
+MODE = os.getenv('MODE', 'local2')
 
 if MODE == 'production':
     print('===  Production')
     NETWORKS = [('seresnet50', IMAGE_SIZE),
-                ('resnet101', IMAGE_SIZE),
                 ('densenet169', IMAGE_SIZE),
-                ('mobilenet', IMAGE_SIZE),
                 ('resnet34', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
 elif MODE == 'testing':
     print('===  Testing')
     NETWORKS = [('mobilenet', IMAGE_SIZE)]
     HOST = 'rabbitmq-server'
-else:
-    print('===  Local')
+elif MODE == 'local1':
+    print('===  Local1')
     NETWORKS = [('mobilenet', IMAGE_SIZE)]
+    HOST = '127.0.0.1'
+else:
+    print('===  Local2')
+    NETWORKS = [('seresnet50', IMAGE_SIZE),
+                ('densenet169', IMAGE_SIZE),
+                ('resnet34', IMAGE_SIZE)]
     HOST = '127.0.0.1'
 
 
@@ -43,6 +47,7 @@ channel.queue_declare(queue='task_queue', durable=True)
 channel.queue_declare(queue='return_queue', durable=True)
 
 
+@timer_avg()
 def process(ch, method, properties, body):
     data = json.loads(body)
     image = convert(data['path'], IMAGE_SIZE)

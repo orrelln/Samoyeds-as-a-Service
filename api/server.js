@@ -25,5 +25,5 @@ app.listen(port, function() {
 });
 
 // Starts rabbitmq stuff
-rabbitmq.initReturnChannel();
-rabbitmq.startWorkQueue();
+rabbitmq.initTaskChannel();
+rabbitmq.startReturnChannel();

@@ -33,7 +33,7 @@ services:
       - './api:/api'
     environment:
       WAIT_HOSTS: rabbitmq-server:5672
-      MODE: testing
+      MODE: production
   api:
     build: ./api
     restart: always

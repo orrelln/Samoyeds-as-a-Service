@@ -1,6 +1,6 @@
 import cProfile
 from functools import wraps
-from time import process_time
+from time import process_time, time
 
 
 def profile(name):
@@ -35,3 +35,18 @@ def async_process_timer(f):
         print('Elapsed time: {}'.format(end-start))
         return result
     return wrapper
+
+
+def timer_avg(avg=[]):
+    def _timer(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            start = time()
+            result = f(*args, **kwargs)
+            avg.append(time() - start)
+            print('Elapsed time: {}'.format(avg[-1]))
+            print('Average time: {}'.format(sum(avg) / len(avg)))
+            return result
+        return wrapper
+    return _timer
+

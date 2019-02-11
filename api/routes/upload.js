@@ -8,28 +8,41 @@ const pgPool = require('../utils/postgres');
 
 router.post('/', (req, res) => {
     image_handling.save(req, res, function (err) {
-        if (err) {
+        if (err || !req.file) {
             res.status(400).json({
                 error: "Request doesn't contain a valid png or jpeg."
             });
         }
         else {
             const id = req.file.filename.replace(/\.[^/.]+$/, "");
+            let ch;
+            try {
+                ch = rabbitmq.getTaskChannel();
+            } catch (err) {
+                res.status(500).json({
+                    error: "Internal Server Error"
+                });
+                ch = null;
+            }
 
-             (async () => {
-                    await Promise.all([InsertStatus(id),
-                        queueItem(id, '/api/' + req.file.path)])
-             })().catch(err => console.log(err.stack));
+            if (ch) {
+                (async () => {
+                    await Promise.all([insertStatus(id),
+                        queueItem(id, ch, '/api/' + req.file.path)])
+                })().catch(err => console.log(err.stack));
 
-            res.status(200).json({
-                ID: id
-            });
+                const approxTime = rabbitmq.getApproxQueueTime();
+                res.status(200).json({
+                    _id: id,
+                    processing_estimation: approxTime
+                });
+            }
         }
     });
 
 });
 
-async function InsertStatus(id) {
+async function insertStatus(id) {
     let now = new Date();
     now.setTime(now.getTime() + (7 * 24 * 60 * 60 * 1000));
 
@@ -48,14 +61,14 @@ async function InsertStatus(id) {
     }
 }
 
-async function queueItem(id, path) {
+async function queueItem(id, ch, path) {
     const msg = {
         id: id,
         path: path
     };
 
     try {
-        rabbitmq.getReturnChannel().sendToQueue('task_queue',  Buffer.from(JSON.stringify(msg)), {persistent: true});
+        ch.sendToQueue('task_queue',  Buffer.from(JSON.stringify(msg)), {persistent: true});
     } catch (err) {
         console.log(err);
     }
