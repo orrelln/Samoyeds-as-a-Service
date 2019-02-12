@@ -5,32 +5,25 @@ const {selectRandom} = require('../utils/postgres');
 router.get('/', (req,res) => {
     (async () => {
         // Query DB for 'count' amount of dogs, up to 10
-        let requested = isNaN(req.query.count) ? 1 : req.query.count;
-        let count = !requested ? 1
-                    : requested  > 10 ? 10
-                    : requested;
+        let count = isNaN(req.query.count) ? 1 : req.query.count;
 
-        let result = await selectRandom(count);
-
-        if(result==="error") {
-            res.status(500).json(result);
-        }
-        else if(result.length < count) {
-            res.status(206).json({
-                success: result,
-                warning: "Not enough images to fulfill request"
-            });
-        }
-        else if(count < requested) {
-            res.status(206).json({
-                success: result,
-                warning: "Maximum request size is 10"
+        if(count > 10) {
+            res.status(403).json({
+                error: "Too many images requested"
             });
         }
         else {
-            res.status(200).json({
-                success: result
-            });
+            let result = await selectRandom(count);
+
+            if (result === "error") {
+                res.status(500).json(result);
+            }
+            else {
+                res.status(200).json({
+                    success: result
+                });
+            }
+
         }
 
     })();
