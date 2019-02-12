@@ -47,10 +47,7 @@ function getApproxQueueTime() {
         _queueInfo.timeTilCheck = now + _queueInfo.timeTilCheckLength
     }
 
-    console.log(approxTime, _queueInfo);
-
     return approxDuration(approxTime);
-
 }
 
 function approxDuration(duration) {
@@ -77,8 +74,6 @@ function approxDuration(duration) {
     }
     return str;
 }
-
-
 
 function startReturnChannel() {
     amqp.connect('amqp://rabbitmq-server:5672', function (err, conn) {

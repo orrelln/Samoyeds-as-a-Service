@@ -23,9 +23,7 @@ router.get('/', (req,res) => {
                     success: result
                 });
             }
-
         }
-
     })();
 });
 

@@ -18,6 +18,26 @@ async function updateStatus(result) {
     }
 }
 
+// Inserts a new status
+async function insertStatus(id) {
+    let now = new Date();
+    now.setTime(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+
+    const client = await pgPool.connect();
+    const query = {
+        text: 'INSERT INTO processing_status(id, status, time_til_finish) VALUES($1, $2, $3)',
+        values: [id, 'processing', now]
+    };
+    try {
+        const res = await client.query(query)
+    } catch(err) {
+        console.log(err.stack)
+    }
+    finally {
+        client.release()
+    }
+}
+
 // Inserts results about image into image_data table
 async function insertRecord(result) {
     const client = await pgPool.connect();
@@ -66,6 +86,7 @@ async function selectRandom(count = 1) {
 module.exports = {
     pgPool,
     updateStatus,
+    insertStatus,
     insertRecord,
     selectRandom
 };

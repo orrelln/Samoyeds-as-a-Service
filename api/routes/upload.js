@@ -1,9 +1,7 @@
 const router = require('express').Router();
 const image_handling = require('../utils/image_handling');
 const rabbitmq = require('../utils/rabbitmq');
-const pgPool = require('../utils/postgres');
-
-
+const pg = require('../utils/postgres');
 
 router.post('/', (req, res) => {
     image_handling.save(req, res, function (err) {
@@ -26,7 +24,7 @@ router.post('/', (req, res) => {
 
             if (ch) {
                 (async () => {
-                    await Promise.all([insertStatus(id),
+                    await Promise.all([pg.insertStatus(id),
                         queueItem(id, ch, '/api/' + req.file.path)])
                 })().catch(err => console.log(err.stack));
 
@@ -40,25 +38,6 @@ router.post('/', (req, res) => {
     });
 
 });
-
-async function insertStatus(id) {
-    let now = new Date();
-    now.setTime(now.getTime() + (7 * 24 * 60 * 60 * 1000));
-
-    const client = await pgPool.connect();
-    const query = {
-        text: 'INSERT INTO processing_status(id, status, time_til_finish) VALUES($1, $2, $3)',
-        values: [id, 'processing', now]
-    };
-    try {
-        const res = await client.query(query)
-    } catch(err) {
-        console.log(err.stack)
-    }
-    finally {
-        client.release()
-    }
-}
 
 async function queueItem(id, ch, path) {
     const msg = {
