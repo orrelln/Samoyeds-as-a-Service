@@ -12,31 +12,24 @@ router.post('/', (req, res) => {
         }
         else {
             const id = req.file.filename.replace(/\.[^/.]+$/, "");
-            let ch;
             try {
-                ch = rabbitmq.getTaskChannel();
-            } catch (err) {
-                res.status(500).json({
-                    error: "Internal Server Error"
-                });
-                ch = null;
-            }
-
-            if (ch) {
+                const ch = rabbitmq.getTaskChannel();
                 (async () => {
                     await Promise.all([pg.insertStatus(id),
-                        queueItem(id, ch, '/api/' + req.file.path)])
+                        queueItem(id, ch, req.file.path)])
                 })().catch(err => console.log(err.stack));
 
                 const approxTime = rabbitmq.getApproxQueueTime();
+
                 res.status(200).json({
                     _id: id,
                     processing_estimation: approxTime
                 });
+            } catch (err) {
+                res.status(500).send();
             }
         }
     });
-
 });
 
 async function queueItem(id, ch, path) {

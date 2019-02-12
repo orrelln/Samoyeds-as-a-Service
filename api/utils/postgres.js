@@ -45,7 +45,7 @@ async function insertRecord(result) {
         text: 'INSERT INTO image_data(id, path, breed1, percentage1, breed2, percentage2, ' +
         'breed3, percentage3, breed4, percentage4, breed5, percentage5) VALUES($1, $2, ' +
         '$3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
-        values: [result.id, result.path.split("api/i")[1], result.breed1, result.percentage1, result.breed2,
+        values: [result.id, result.path, result.breed1, result.percentage1, result.breed2,
             result.percentage2, result.breed3, result.percentage3, result.breed4,
             result.percentage4, result.breed5, result.percentage5]
     };

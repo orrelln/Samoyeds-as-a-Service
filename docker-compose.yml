@@ -30,10 +30,10 @@ services:
     tty: true
     volumes:
       - './processing:/processing'
-      - './api:/api'
+      - images:/images
     environment:
       WAIT_HOSTS: rabbitmq-server:5672
-      MODE: production
+      MODE: testing
   api:
     build: ./api
     restart: always
@@ -44,6 +44,7 @@ services:
     tty: true
     volumes:
       - './api:/api'
+      - images:/images
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -57,3 +58,4 @@ volumes:
     driver: local
   processing:
   api:
+  images:

@@ -7,7 +7,7 @@ const imageTypes = ['image/jpeg', 'image/png'];
 const storage = multer.diskStorage (
     {
         destination: function (req, file, cb) {
-            cb(null, './i')
+            cb(null, '/images')
         },
         filename: function (req, file, cb) {
             const newFilename = `${uuid()}${path.extname(file.originalname)}`;
@@ -17,14 +17,15 @@ const storage = multer.diskStorage (
 );
 
 const upload = multer({
-    destination: __dirname + '/../i/',
+    destination: '/images',
     storage: storage,
     limits: {fileSize: 20000000, files:1},
     fileFilter: function (req, file, cb) {
         if (file && imageTypes.includes(file.mimetype)) {
             cb(null, true);
+        } else {
+            return cb(null, false);
         }
-        return cb(null, false, new Error('Faulty mimetype'));
     }
 });
 
