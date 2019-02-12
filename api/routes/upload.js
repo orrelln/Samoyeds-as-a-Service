@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const image_handling = require('../utils/image_handling');
 const rabbitmq = require('../utils/rabbitmq');
-const fs = require('fs');
 const pgPool = require('../utils/postgres');
 
 
