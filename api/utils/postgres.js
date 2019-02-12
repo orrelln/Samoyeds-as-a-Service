@@ -83,10 +83,33 @@ async function selectRandom(count = 1) {
     return paths;
 }
 
+// Selects image path by id from image_data table
+async function selectId(id) {
+    const client = await pgPool.connect();
+    let path;
+    const query = {
+        text: 'SELECT path FROM image_data WHERE id = $1',
+        values: [id]
+    };
+    try {
+        const res = await client.query(query);
+        console.log(JSON.stringify(res));
+        path = res.rows[0].path;
+    } catch(err) {
+        console.log(err.stack);
+        path = err.stack;
+    }
+    finally {
+        client.release();
+    }
+    return path;
+}
+
 module.exports = {
     pgPool,
     updateStatus,
     insertStatus,
     insertRecord,
-    selectRandom
+    selectRandom,
+    selectId
 };

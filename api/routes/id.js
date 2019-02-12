@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const {selectId} = require('../utils/postgres');
 const re = new RegExp('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89ab][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$');
 
 router.get('/:id', (req, res) => {
@@ -10,10 +11,18 @@ router.get('/:id', (req, res) => {
         });
     }
     else {
-        res.status(200).json({
-            Success: "ID get!",
+        (async () => {
+            let result = await selectId(id);
 
-        });
+            if (result === "error") {
+                res.status(500).json(result);
+            }
+            else {
+                res.status(200).json({
+                    success: result
+                });
+            }
+        })();
     }
 
 });
