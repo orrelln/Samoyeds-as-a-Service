@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {_selectRandom} = require('../utils/postgres');
+const {selectRandom} = require('../utils/postgres');
 
 // Handles requests for random images, up to 10
 router.get('/', (req,res) => {
@@ -14,7 +14,7 @@ router.get('/', (req,res) => {
         }
 
         // Query DB for 'count' amount of dogs
-        let result = await _selectRandom(count);
+        let result = await selectRandom(count);
 
         if(result==="error") {
             res.status(500).json(result);

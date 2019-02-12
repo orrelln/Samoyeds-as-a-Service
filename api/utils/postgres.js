@@ -2,7 +2,7 @@ const { Pool } = require('pg');
 const pgPool = new Pool();
 
 // Updates processing_status row
-async function _updateStatus(result) {
+async function updateStatus(result) {
     const client = await pgPool.connect();
     const query = {
         text: 'UPDATE processing_status SET status = $1 WHERE id = $2',
@@ -19,7 +19,7 @@ async function _updateStatus(result) {
 }
 
 // Inserts results about image into image_data table
-async function _insertRecord(result) {
+async function insertRecord(result) {
     const client = await pgPool.connect();
     const query = {
         text: 'INSERT INTO image_data(id, path, breed1, percentage1, breed2, percentage2, ' +
@@ -40,7 +40,7 @@ async function _insertRecord(result) {
 }
 
 // Selects random paths from image_data table
-async function _selectRandom(count = 1) {
+async function selectRandom(count = 1) {
     const client = await pgPool.connect();
     let paths = [];
     const query = {
@@ -65,7 +65,7 @@ async function _selectRandom(count = 1) {
 
 module.exports = {
     pgPool,
-    _updateStatus,
-    _insertRecord,
-    _selectRandom
+    updateStatus,
+    insertRecord,
+    selectRandom
 };

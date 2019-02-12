@@ -1,5 +1,5 @@
 const amqp = require('amqplib/callback_api');
-const {pgPool, _updateStatus, _insertRecord} = require('./postgres');
+const {pgPool, updateStatus, insertRecord} = require('./postgres');
 const assert = require('assert');
 
 let _taskChannel = null;
@@ -93,8 +93,8 @@ function startReturnChannel() {
                 let result = JSON.parse(msg.content);
 
                 (async () => {
-                    await Promise.all([_updateStatus(result),
-                        result.error ? null : _insertRecord(result)]);
+                    await Promise.all([updateStatus(result),
+                        result.error ? null : insertRecord(result)]);
                 })().catch(err => console.log(err.stack));
 
                 console.log(" [x] Received %s", result.id);
