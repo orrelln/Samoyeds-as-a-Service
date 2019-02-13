@@ -89,7 +89,7 @@ function startReturnChannel() {
 
                 (async () => {
                     await Promise.all([updateStatus(result),
-                        result.error ? null : insertRecord(result)]);
+                        result.reject ? null : insertRecord(result)]);
                 })().catch(err => console.log(err.stack));
 
                 console.log(" [x] Received %s", result.id);

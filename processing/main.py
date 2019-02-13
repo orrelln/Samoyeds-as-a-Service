@@ -54,22 +54,22 @@ def process(ch, method, properties, body):
     predictions = []
 
     if image:
-        error = False
+        reject = False
         image = np.array(image)
         list_predictions = []
         for network in image_networks:
             list_predictions.append(network.classify(image.copy()))
         predictions = average(combine_dictionaries(list_predictions))
     else:
-        error = True
+        reject = True
 
     if len(predictions) == 0:
-        error = True
+        reject = True
 
     data = {
         'id': data['id'],
         'path': data['path'],
-        'error': error
+        'reject': reject
     }
 
     for i in range(5):

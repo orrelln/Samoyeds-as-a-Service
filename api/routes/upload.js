@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
                 const approxTime = rabbitmq.getApproxQueueTime();
 
                 res.status(200).json({
-                    _id: id,
+                    id: id,
                     processing_estimation: approxTime
                 });
             } catch (err) {

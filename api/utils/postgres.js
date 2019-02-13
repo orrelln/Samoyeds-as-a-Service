@@ -6,13 +6,13 @@ async function updateStatus(result) {
     const client = await pgPool.connect();
     const query = {
         text: 'UPDATE processing_status SET status = $1 WHERE id = $2',
-        values: [result.error ? 'rejected' : 'approved', result.id]
+        values: [result.reject ? 'rejected' : 'approved', result.id]
     };
     try {
         const res = await client.query(query);
     } catch(err) {
         console.log(err.stack);
-    }
+    } 
     finally {
         client.release();
     }

@@ -14,4 +14,4 @@ class ImageNetNetwork:
         image = self.preprocess_input(image)
         image = np.expand_dims(image, 0)
         results = decode_predictions(self.model.predict(image))[0]
-        return {result[1]: result[2] for result in results}
+        return {result[1].lower(): result[2] for result in results}
