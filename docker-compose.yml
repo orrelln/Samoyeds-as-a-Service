@@ -53,6 +53,7 @@ services:
       PGDATABASE: ${POSTGRES_USER}
       PGPASSWORD: ${POSTGRES_PASSWORD}
       WAIT_HOSTS: db:5432, rabbitmq-server:5672
+      WAIT_HOSTS_TIMEOUT: 200
 volumes:
   db-data:
     driver: local

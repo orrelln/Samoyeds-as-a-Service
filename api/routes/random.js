@@ -13,15 +13,14 @@ router.get('/', (req,res) => {
             });
         }
         else {
-            let result = await selectRandom(count);
-
-            if (result === "error") {
-                res.status(500).json(result);
-            }
-            else {
+            try {
+                let result = await selectRandom(count);
                 res.status(200).json({
                     success: result
                 });
+            }
+            catch (err) {
+                res.status(501).json(err);
             }
         }
     })();

@@ -12,15 +12,14 @@ router.get('/:id', (req, res) => {
     }
     else {
         (async () => {
-            let result = await selectId(id);
-
-            if (result === "error") {
-                res.status(500).json(result);
-            }
-            else {
+            try {
+                let result = await selectId(id);
                 res.status(200).json({
                     success: result
                 });
+            }
+            catch (err) {
+                res.status(501).json(err);
             }
         })();
     }
