@@ -10,7 +10,8 @@ async function updateStatus(result) {
     };
     try {
         const res = await client.query(query);
-    } catch(err) {
+    }
+    catch(err) {
         console.log(err.stack);
     } 
     finally {
@@ -30,7 +31,8 @@ async function insertStatus(id) {
     };
     try {
         const res = await client.query(query)
-    } catch(err) {
+    }
+    catch(err) {
         console.log(err.stack)
     }
     finally {
@@ -51,7 +53,8 @@ async function insertRecord(result) {
     };
     try {
         const res = await client.query(query);
-    } catch(err) {
+    }
+    catch(err) {
         console.log(err.stack);
     }
     finally {
@@ -72,21 +75,20 @@ async function selectRandom(count = 1) {
         res.rows.forEach((obj) => {
             paths.push(obj.path);
         });
-        console.log(JSON.stringify(paths));
-    } catch(err) {
+        return paths;
+    }
+    catch(err) {
         console.log(err.stack);
-        paths = err.stack;
+        throw new Error(err)
     }
     finally {
         client.release();
     }
-    return paths;
 }
 
 // Selects image path by id from image_data table
 async function selectId(id) {
     const client = await pgPool.connect();
-    let path;
     const query = {
         text: 'SELECT path FROM image_data WHERE id = $1',
         values: [id]
@@ -94,15 +96,36 @@ async function selectId(id) {
     try {
         const res = await client.query(query);
         console.log(JSON.stringify(res));
-        path = res.rows[0].path;
-    } catch(err) {
+        return res.rows[0].path;
+    }
+    catch(err) {
         console.log(err.stack);
-        path = err.stack;
+        throw new Error(err.stack);
     }
     finally {
         client.release();
     }
-    return path;
+}
+
+// Selects random image path by breed from image_data table
+async function selectBreed(breed) {
+    const client = await pgPool.connect();
+    const query = {
+        text: `SELECT path FROM image_data WHERE breed1 = '$1' ORDER BY random() LIMIT 1`,
+        values: [breed]
+    };
+    try {
+        const res = await client.query(query);
+        console.log(JSON.stringify(res));
+        return res.rows[0].path;
+    }
+    catch(err) {
+        console.log(err.stack);
+        throw new Error(err.stack);
+    }
+    finally {
+        client.release();
+    }
 }
 
 module.exports = {
@@ -111,5 +134,6 @@ module.exports = {
     insertStatus,
     insertRecord,
     selectRandom,
-    selectId
+    selectId,
+    selectBreed
 };
