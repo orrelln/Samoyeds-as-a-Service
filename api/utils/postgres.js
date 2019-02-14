@@ -108,11 +108,11 @@ async function selectId(id) {
 }
 
 // Selects random image path by breed from image_data table
-async function selectBreed(breed) {
+async function selectBreed(breed, count = 1) {
     const client = await pgPool.connect();
     const query = {
-        text: `SELECT path FROM image_data WHERE breed1 = '$1' ORDER BY random() LIMIT 1`,
-        values: [breed]
+        text: `SELECT path FROM image_data WHERE breed1 = '$1' ORDER BY random() LIMIT $2`,
+        values: [breed, count]
     };
     try {
         const res = await client.query(query);
