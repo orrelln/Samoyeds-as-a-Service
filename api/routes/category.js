@@ -6,12 +6,15 @@ router.get(`/:category`, (req, res) => {
 
     if (!category.includes(category)) {
         res.status(404).json({
-            error: 'That category does not exist'
+            status: 'error',
+            code: '404',
+            message: 'That category does not exist'
         });
     }
     else {
         res.status(200).json({
-            Success: `Category ${category} get!`
+            status: 'success',
+            message: `Category ${category} get!`
         });
     }
 });

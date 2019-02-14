@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {breed} = require('../utils/dogs');
 const {selectBreed} = require('../utils/postgres');
+const {idToImgPath} = require('../utils/express_functions');
 
 
 router.get('/:breed', (req, res) => {
@@ -10,23 +11,32 @@ router.get('/:breed', (req, res) => {
 
         if (!breed.includes(requestedBreed)) {
             res.status(404).json({
-                error: 'That breed does not exist'
+                status: 'error',
+                code: '404',
+                message: 'That breed does not exist'
             });
         }
         else if(count > 10) {
             res.status(403).json({
-                error: "Too many images requested"
+                status: 'error',
+                code: '403',
+                message: "Too many images requested"
             });
         }
         else {
             try {
-                let result = await selectBreed(breed, count);
+                let result = await selectBreed(requestedBreed, count);
                 res.status(200).json({
-                    success: result
+                    status: 'success',
+                    message: idToImgPath(result, req)
                 });
             }
             catch (err) {
-                res.status(501).json(err);
+                res.status(500).json({
+                    status: 'error',
+                    code: '500',
+                    message: 'Internal Server Error, try again later.'
+                });
             }
         }
     })();

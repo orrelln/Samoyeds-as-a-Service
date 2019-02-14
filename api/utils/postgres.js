@@ -13,6 +13,7 @@ async function updateStatus(result) {
     }
     catch(err) {
         console.log(err.stack);
+        throw new Error(err)
     } 
     finally {
         client.release();
@@ -20,9 +21,9 @@ async function updateStatus(result) {
 }
 
 // Inserts a new status
-async function insertStatus(id) {
+async function insertStatus(id, approxTime) {
     let now = new Date();
-    now.setTime(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+    now.setTime(now.getTime() + (approxTime * 1000));
 
     const client = await pgPool.connect();
     const query = {
@@ -33,7 +34,8 @@ async function insertStatus(id) {
         const res = await client.query(query)
     }
     catch(err) {
-        console.log(err.stack)
+        console.log(err.stack);
+        throw new Error(err)
     }
     finally {
         client.release()
@@ -65,17 +67,17 @@ async function insertRecord(result) {
 // Selects random paths from image_data table
 async function selectRandom(count = 1) {
     const client = await pgPool.connect();
-    let paths = [];
+    let ids = [];
     const query = {
-        text: 'SELECT path FROM image_data ORDER BY random() LIMIT $1',
+        text: 'SELECT id FROM image_data ORDER BY random() LIMIT $1',
         values: [count]
     };
     try {
         const res = await client.query(query);
         res.rows.forEach((obj) => {
-            paths.push(obj.path);
+            ids.push(obj.id);
         });
-        return paths;
+        return ids;
     }
     catch(err) {
         console.log(err.stack);
@@ -90,13 +92,32 @@ async function selectRandom(count = 1) {
 async function selectId(id) {
     const client = await pgPool.connect();
     const query = {
-        text: 'SELECT path FROM image_data WHERE id = $1',
+        text: 'SELECT id, breed1 FROM image_data WHERE id = $1',
         values: [id]
     };
     try {
         const res = await client.query(query);
-        console.log(JSON.stringify(res));
-        return res.rows[0].path;
+        return res.rows[0];
+    }
+    catch(err) {
+        console.log(err.stack);
+        throw new Error(err.stack);
+    }
+    finally {
+        client.release();
+    }
+}
+
+// Selects image path by id from image_data table
+async function selectIdProcessing(id) {
+    const client = await pgPool.connect();
+    const query = {
+        text: 'SELECT id, status, time_til_finish FROM processing_status WHERE id = $1',
+        values: [id]
+    };
+    try {
+        const res = await client.query(query);
+        return res.rows[0];
     }
     catch(err) {
         console.log(err.stack);
@@ -110,14 +131,17 @@ async function selectId(id) {
 // Selects random image path by breed from image_data table
 async function selectBreed(breed, count = 1) {
     const client = await pgPool.connect();
+    let ids = [];
     const query = {
-        text: `SELECT path FROM image_data WHERE breed1 = '$1' ORDER BY random() LIMIT $2`,
+        text: `SELECT id FROM image_data WHERE breed1 = $1 ORDER BY random() LIMIT $2`,
         values: [breed, count]
     };
     try {
         const res = await client.query(query);
-        console.log(JSON.stringify(res));
-        return res.rows[0].path;
+        res.rows.forEach((obj) => {
+            ids.push(obj.id);
+        });
+        return ids;
     }
     catch(err) {
         console.log(err.stack);
@@ -135,5 +159,6 @@ module.exports = {
     insertRecord,
     selectRandom,
     selectId,
+    selectIdProcessing,
     selectBreed
 };
