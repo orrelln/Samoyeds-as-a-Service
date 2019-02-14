@@ -1,0 +1,14 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "Client-served webpage for SaaS",
+  "main": "\"\"",
+  "scripts": {
+    "compile-sass": "node-sass sass/main.scss css/index.css -w"
+  },
+  "author": "Amedee Kirkpatrick",
+  "license": "ISC",
+  "dependencies": {
+    "node-sass": "^4.11.0"
+  }
+}
