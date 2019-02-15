@@ -3,6 +3,7 @@ const {breed} = require('../utils/dogs');
 const {selectBreed} = require('../utils/postgres');
 const {idToImgPath} = require('../utils/express_functions');
 
+const limit = 10;
 
 router.get('/:breed', (req, res) => {
     (async () => {
@@ -16,11 +17,14 @@ router.get('/:breed', (req, res) => {
                 message: 'That breed does not exist'
             });
         }
-        else if(count > 10) {
+        else if(count > limit) {
             res.status(403).json({
                 status: 'error',
                 code: '403',
-                message: "Too many images requested"
+                message: {
+                    info: "Too many images requested",
+                    limit: limit
+                }
             });
         }
         else {

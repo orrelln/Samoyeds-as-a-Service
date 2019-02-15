@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
                 } else {
                     result = await selectIdProcessing(id);
                     if (result) {
-                        const msg = _generateStatusMsg(result.status);
+                        const msg = _generateStatusMsg(result);
                         res.status(200).json({
                             status: 'success',
                             message: msg
@@ -55,33 +55,33 @@ router.get('/:id', (req, res) => {
     }
 });
 
-function _generateStatusMsg (status) {
+function _generateStatusMsg(result) {
     let msg;
-     switch (status) {
-         case 'processing':
-             const now = Date.now();
-             const timeRemaining = Math.max(result.time_til_finish - now, 0);
-             msg = {
-                 processing_status: 'processing',
-                 processing_estimation: approxTimeToMsg(timeRemaining / 1000)
-             };
-             break;
-         case 'rejected':
-             msg = {
-                 processing_status: 'rejected',
-                 processing_message: 'Image was not identified to be that of a dog or supported dog breed'
-             };
-             break;
-         case 'completed':
-             msg = {
-                 processing_status: 'completed',
-                 processing_message: 'Image was identified, try accessing this endpoint again'
-             };
-             break;
-         default:
-             msg = 'Please report this id if this message occurs'
-     }
-     return msg;
+    switch (result.status) {
+        case 'processing':
+            const now = Date.now();
+            const timeRemaining = Math.max(result.time_til_finish - now, 0);
+            msg = {
+                processing_status: 'processing',
+                processing_estimation: approxTimeToMsg(timeRemaining / 1000)
+            };
+            break;
+        case 'rejected':
+            msg = {
+                processing_status: 'rejected',
+                processing_message: 'Image was not identified to be that of a dog or supported dog breed'
+            };
+            break;
+        case 'completed':
+            msg = {
+                processing_status: 'completed',
+                processing_message: 'Image was identified, try accessing this endpoint again'
+            };
+            break;
+        default:
+            msg = 'Please report this id if this message occurs'
+    }
+    return msg;
 }
 
 

@@ -1,6 +1,5 @@
 #!/bin/bash
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-for filename in $(ls photos)
+for filepath in $(find photos -type f)
 do
-  curl -F photo=@photos/$filename http://localhost:8000/upload
+  curl -F photo=@${filepath} http://localhost:8000/upload
 done;
