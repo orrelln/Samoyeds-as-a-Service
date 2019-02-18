@@ -44,13 +44,11 @@ async function insertStatus(id, approxTime) {
 }
 
 function create_query_array(result){
-    let arr = [];
-    result.breed1 ? arr.push([result.id, result.breed1, result.percentage1]) : null;
-    result.breed2 ? arr.push([result.id, result.breed2, result.percentage2]) : null;
-    result.breed3 ? arr.push([result.id, result.breed3, result.percentage3]) : null;
-    result.breed4 ? arr.push([result.id, result.breed4, result.percentage4]) : null;
-    result.breed5 ? arr.push([result.id, result.breed5, result.percentage5]) : null;
-    return arr;
+    let new_arr = [];
+    result.predictions.forEach((prediction) => {
+        new_arr.push([result.id, prediction[0], prediction[1]])
+    });
+    return new_arr;
 }
 
 // Inserts results about image into image_data table
@@ -60,7 +58,7 @@ async function insertRecord(result) {
         text: 'INSERT INTO images(id, ts) VALUES($1, $2)',
         values: [result.id, new Date()]
     };
-    const predictions_query = pgFormat('INSERT INTO predictions (image_id, breed, percentage) VALUES %L',
+    const predictions_query = pgFormat('INSERT INTO predictions (id, breed, percentage) VALUES %L',
         create_query_array(result));
 
     try {
@@ -106,10 +104,11 @@ async function selectRandom(count = 1) {
 async function selectId(id) {
     const client = await pgPool.connect();
     const query = {
-        text: 'SELECT image_id as id, breed, percentage ' +
+        text: 'SELECT id, breed, percentage ' +
             'FROM predictions ' +
-            'WHERE image_id = $1 ' +
-            'ORDER BY percentage DESC',
+            'WHERE id = $1 ' +
+            'ORDER BY percentage DESC ' +
+            'LIMIT 1',
         values: [id]
     };
     try {
@@ -150,7 +149,7 @@ async function selectBreed(breed, count = 1) {
     const client = await pgPool.connect();
     let ids = [];
     const query = {
-        text: 'SELECT image_id as id, breed ' +
+        text: 'SELECT id, breed ' +
             'FROM predictions ' +
             'WHERE breed = $1' +
             'ORDER BY random() ' +

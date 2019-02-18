@@ -9,10 +9,10 @@ from os import walk
 import os
 
 images = []
-for (dirpath, _, filenames) in walk('images/'):
+for (dirpath, _, filenames) in walk('furries/'):
     for filename in filenames:
         if imghdr.what(dirpath + filename) in ['jpeg', 'jpeg', None]:
-            images.append('scripts/images/' + filename)
+            images.append('scripts/furries/' + filename)
 
 #images = ['samoyed.jpg']
 

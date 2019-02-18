@@ -20,10 +20,10 @@ router.get('/:id', (req, res) => {
                 let result = await selectId(id);
                 if (result) {
                     res.status(200).json({
-                        status: 'success',
+                        status: 'successs',
                         message: {
                             image: idToImgPath(result.id, req),
-                            breed: result.breed1,
+                            breed: result.breed,
                         }
                     });
                 } else {
@@ -72,9 +72,9 @@ function _generateStatusMsg(result) {
                 processing_message: 'Image was not identified to be that of a dog or supported dog breed'
             };
             break;
-        case 'completed':
+        case 'approved':
             msg = {
-                processing_status: 'completed',
+                processing_status: 'approved',
                 processing_message: 'Image was identified, try accessing this endpoint again'
             };
             break;

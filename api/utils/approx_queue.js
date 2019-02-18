@@ -1,4 +1,4 @@
-// approxLoad {Testing: 0.315, Production: 1.94}
+// approxLoad {Testing: 0.315, Production: 1.71}
 let _queueInfo = {
     approxCount: 0,
     approxLoad: 1.94,

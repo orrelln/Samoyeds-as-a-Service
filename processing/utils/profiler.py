@@ -44,7 +44,7 @@ def timer_avg(avg=[]):
             start = time()
             result = f(*args, **kwargs)
             avg.append(time() - start)
-            print('Elapsed time: {}'.format(avg[-1]))
+            #print('Elapsed time: {}'.format(avg[-1]))
             print('Average time: {}'.format(sum(avg) / len(avg)))
             return result
         return wrapper
