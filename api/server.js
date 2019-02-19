@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 
 // Handle routes
 app.use('/', routes);
+app.use(express.static(__dirname + '/client'));
+
 
 app.use('*', function (req, res) {
     res.status(404).json({

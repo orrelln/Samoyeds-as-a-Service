@@ -1,0 +1,6 @@
+@mixin hoverable {
+  &:hover {
+    transform: translateY(-.3rem);
+    box-shadow: 0 1rem 2rem rgba($color-black,.2);
+  }
+}
