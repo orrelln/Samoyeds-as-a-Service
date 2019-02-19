@@ -33,7 +33,7 @@ services:
       - images:/images
     environment:
       WAIT_HOSTS: rabbitmq-server:5672
-      MODE: testing
+      MODE: ${MODE}
   api:
     build: ./api
     restart: always
@@ -54,6 +54,7 @@ services:
       PGPASSWORD: ${POSTGRES_PASSWORD}
       WAIT_HOSTS: db:5432, rabbitmq-server:5672
       WAIT_HOSTS_TIMEOUT: 200
+      MODE: ${MODE}
 volumes:
   db-data:
     driver: local
