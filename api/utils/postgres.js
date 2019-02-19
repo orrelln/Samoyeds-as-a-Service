@@ -77,11 +77,16 @@ async function insertRecord(result) {
 }
 
 // Selects random paths from image_data table
-async function selectRandom(count = 1) {
+async function selectRandom(count = 1, safe_mode) {
     const client = await pgPool.connect();
     let ids = [];
     const query = {
-        text: 'SELECT id FROM images ORDER BY random() LIMIT $1',
+        text: 'SELECT id\n' +
+            'FROM images\n' +
+            (safe_mode ? 'WHERE safe_mode is true\n' : '') +
+            'ORDER by random()\n' +
+            'LIMIT $1\n' +
+            '\n',
         values: [count]
     };
     try {
@@ -145,15 +150,15 @@ async function selectIdProcessing(id) {
 }
 
 // Selects random image path by breed from image_data table
-async function selectBreed(breed, count = 1) {
+async function selectBreed(breed, count = 1, safe_mode) {
     const client = await pgPool.connect();
     let ids = [];
     const query = {
-        text: 'SELECT id, breed ' +
-            'FROM predictions ' +
-            'WHERE breed = $1' +
-            'ORDER BY random() ' +
-            'LIMIT $2',
+        text: 'SELECT images.id, breed\n' +
+            'FROM images INNER JOIN predictions on images.id=predictions.id\n' +
+            'WHERE '  + (safe_mode ? 'safe_mode is true and ' : '') + 'breed = $1\n' +
+            'ORDER BY RANDOM()\n' +
+            'LIMIT $2\n',
         values: [breed, count]
     };
     try {

@@ -8,7 +8,8 @@ const limit = 10;
 router.get('/', (req,res) => {
     (async () => {
         // Query DB for 'count' amount of dogs, up to 10
-        let count = isNaN(req.query.count) ? 1 : req.query.count;
+        const count = isNaN(req.query.count) ? 1 : req.query.count;
+        const safe_mode = isNaN(req.query.safe_mode) ? true : req.query.safe_mode;
 
         if(count > limit) {
             res.status(403).json({
@@ -22,7 +23,7 @@ router.get('/', (req,res) => {
         }
         else {
             try {
-                let result = await selectRandom(count);
+                let result = await selectRandom(count, safe_mode);
                 res.status(200).json({
                     status: 'success',
                     message: idToImgPath(result, req)
