@@ -1,0 +1,28 @@
+.try {
+  display: grid;
+  padding: 4rem 20vw 0;
+  grid-template-columns: 9fr 1fr;
+  grid-column-gap: 1rem;
+  grid-template-areas:
+      'url btn'
+      'img img'
+      'json json';
+
+  &__url {
+    grid-area: url;
+    max-height: 5.7rem;
+  }
+
+  &__btn {
+    grid-area: btn;
+    max-height: 5.7rem;
+  }
+
+  &__img {
+    grid-area: img;
+  }
+
+  &__json {
+    grid-area: json;
+  }
+}

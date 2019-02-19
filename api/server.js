@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 // Handle routes
 app.use('/', routes);
+app.use(express.static(__dirname + '/client'));
 app.use(subdomain('img', express.static('/images', {extensions: ['jpeg', 'jpg', 'png']})));
 
 // Handles non-existent routes

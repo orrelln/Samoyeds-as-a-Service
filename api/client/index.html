@@ -2,9 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/index.css">
     <title>Samoyeds as a Service</title>
 </head>
 <body>
-Hi
+
+
+<header class="header">
+    <div class="header__text-box">
+        <h1 class="heading-primary">
+            <span class="heading-primary--main">Samoyeds as a Service</span>
+            <span class="heading-primary--sub">The Automagic dog cataloging service</span>
+        </h1>
+        <a href="#about" class="btn btn--white btn--header">About</a>
+        <a href="https://app.swaggerhub.com/apis-docs/Samoyeds/Samoyeds-as-a-Service/1.0.0" class="btn btn--white btn--header">Docs</a>
+    </div>
+</header>
+
+
+<div class="about" id="about">
+    <h1 class="about__title u-center">Welcome to Samoyeds as a Service</h1>
+    <div class="about__section">
+        <div class="title">More than just Samoyeds</div>
+        <div class="content">Are you a fan of smaller puppers, even bigger doggos or even wolves? No problem! From Affenpinscher to Yorkshire Terrier, we offer over 20,000 images of over 120 breeds of dogs. With this many good boys available, you're bound to find the right image in no time.</div>
+    </div>
+    <div class="about__section">
+        <div class="title">Multiple ways to select images</div>
+        <div class="content">We currently offer three unique ways to get the doggo you want. Want a specific breed? We got you covered. Like a dog photo that you had gotten before? You can access it again via it's unique ID. We even support the nine distinct groups that the AKC uses to categorize our furry friends.</div>
+    </div>
+    <div class="about__section">
+        <div class="title">Upload your own canine companion</div>
+        <div class="content">Not quite enough dogs? We agree. You can help us out by providing your own doggo for our database. All it takes is sending us the image via our upload endpoint. We will even determine the dog breed automatically for you!</div>
+    </div>
+</div>
+
+
+<div class="try">
+    <div class="try__url">
+        <a href="javascript:void(0);" class="btn btn--tryit btn--blue u-margin-right">
+            Get
+        </a>
+        <span>https://samoyeds.cc/</span>
+        <select id="try__url__primary">
+            <option value="breed">breed</option>
+            <option value="category">category</option>
+            <option value="random">random</option>
+        </select>
+        <span>/</span>
+        <select id="try__url__secondary">
+
+        </select>
+    </div>
+    <a href="javascript:void(0);" class="try__btn btn btn--tryit btn--white btn--hover">Go!</a>
+
+    <div class="try__img">
+        <div class="title u-center">Image</div>
+        <img class="res_image u-hidden"  alt="dog image">
+    </div>
+
+    <div class="try__json">
+        <div class="title u-center">JSON</div>
+        <pre class="payload u-hidden">
+        </pre>
+    </div>
+
+</div>
+
+
 </body>
+<script src="js/vendor/jquery-3.3.1.min.js"></script>
+<script src="js/breeds.js"></script>
+<script src="js/index.js"></script>
 </html>

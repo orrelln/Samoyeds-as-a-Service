@@ -1,12 +1,13 @@
 @import "abstracts/mixins";
 @import "abstracts/variables";
 
-@import "base/base";
 @import "base/reset";
 @import "base/typography";
 @import "base/utilities";
 
 @import "components/buttons";
+@import "components/select";
+@import "components/pre";
 
 @import "layouts/grid";
 @import "layouts/header";

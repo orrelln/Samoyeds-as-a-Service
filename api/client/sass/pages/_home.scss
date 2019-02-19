@@ -1,0 +1,43 @@
+.about {
+  margin-top: -20vh;
+  background-color: $color-grey-light;
+  padding: 25rem 20vw;
+
+
+}
+
+h1 {
+  padding-bottom: 3rem;
+}
+
+.title {
+  padding-top: 2rem;
+}
+
+.try {
+  margin-top: -20vh;
+  min-height: 120vh;
+  padding-top: 25rem;
+  clip-path: polygon(0 20vh, 100% 0, 100% 100%, 0 100%);
+  position: relative;
+  background: linear-gradient(
+                  to right bottom,
+                  rgba($color-primary-light, 0.8),
+                  rgba($color-primary-dark, 0.8)),
+  url("../assets/field.jpg") no-repeat center center;
+  background-size: cover;
+
+  &__url {
+    background-color: $color-grey-light;
+    text-align: left;
+    border-radius: 2px;
+  }
+
+  &__img {
+    margin: 0 auto;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
