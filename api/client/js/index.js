@@ -17,7 +17,7 @@ goBtn.click(() => {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             console.log("Success!");
-            $('.res_image').attr('src', res.message[0]).removeClass('u-hidden');
+            $('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
             $('.payload').text(res).removeClass('u-hidden');
         },
         error: (err) => {
@@ -30,7 +30,6 @@ goBtn.click(() => {
 
 function populateOptions() {
     {
-        console.log('uhh');
         secondary.removeClass('u-hidden');
         secondary.html('');
 
