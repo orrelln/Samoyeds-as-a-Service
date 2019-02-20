@@ -12,7 +12,7 @@ goBtn.click(() => {
     let primaryOption = `${$( "#try__url__primary option:selected" ).text()}`;
     let secondaryOption =  `${$( "#try__url__secondary option:selected" ).text()}`;
     $.ajax({
-        type: 'POST',
+        type: 'GET',
         url: `/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
