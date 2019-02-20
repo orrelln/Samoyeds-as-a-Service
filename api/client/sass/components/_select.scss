@@ -2,9 +2,11 @@ select {
   border: 1px solid $color-grey-dark;
   width: inherit;
   padding: 0 1rem;
-  margin: 0 .5rem;
+  margin: 1rem .5rem;
   min-width: 5rem;
   -webkit-appearance: none;
   background-color: $color-white;
+  height: 70%;
+
 }
 

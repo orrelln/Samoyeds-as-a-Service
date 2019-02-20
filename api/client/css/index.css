@@ -58,6 +58,9 @@ h1 {
 select {
   font-size: inherit; }
 
+.try__req__url__upload__btn {
+  font-size: 1.5rem; }
+
 .u-center {
   text-align: center; }
 
@@ -130,10 +133,11 @@ select {
   border: 1px solid #777;
   width: inherit;
   padding: 0 1rem;
-  margin: 0 .5rem;
+  margin: 1rem .5rem;
   min-width: 5rem;
   -webkit-appearance: none;
-  background-color: #FFF; }
+  background-color: #FFF;
+  height: 70%; }
 
 pre {
   display: block;
@@ -147,6 +151,23 @@ pre {
   background-color: #F7F7F7;
   border: 1px solid #ccc;
   border-radius: 4px; }
+
+.try__req__url__upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block; }
+  .try__req__url__upload__btn {
+    border: 1px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 4px; }
+  .try__req__url__upload input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0; }
 
 .try__req {
   display: grid;
@@ -166,15 +187,19 @@ pre {
     grid-area: url;
     display: grid;
     grid-template-columns: 6fr 4fr 1fr 9fr 2fr;
-    grid-template-areas: 'domain path1 slash path2 .'; }
+    grid-template-areas: 'domain path1 slash path2 upload'; }
     .try__req__url__domain {
+      padding: 1.25rem 0;
       grid-area: domain; }
     .try__req__url__path1 {
       grid-area: path1; }
     .try__req__url__slash {
+      padding: 1.25rem 0;
       grid-area: slash; }
     .try__req__url__path2 {
       grid-area: path2; }
+    .try__req__url__upload {
+      grid-area: upload; }
   .try__req__go {
     grid-area: go;
     display: flex;
@@ -209,9 +234,10 @@ h1 {
   padding-top: 2rem; }
 
 .try {
+  padding-top: 25rem;
+  text-align: center;
   margin-top: -20vh;
   min-height: 120vh;
-  padding-top: 25rem;
   clip-path: polygon(0 20vh, 100% 0, 100% 100%, 0 100%);
   position: relative;
   background: linear-gradient(to right bottom, rgba(255, 247, 215, 0.8), rgba(178, 155, 63, 0.8)), url("../assets/field.jpg") no-repeat center center;
@@ -227,6 +253,8 @@ h1 {
     background-color: #FFF;
     cursor: pointer; }
   .try__img {
-    margin: 0 auto; }
+    margin: auto; }
     .try__img img {
       max-width: 100%; }
+  .try__json {
+    padding: 0 25rem; }

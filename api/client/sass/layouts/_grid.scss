@@ -21,18 +21,23 @@
     display: grid;
     grid-template-columns: 6fr 4fr 1fr 9fr 2fr;
     grid-template-areas:
-      'domain path1 slash path2 .';
+      'domain path1 slash path2 upload';
     &__domain {
+      padding: 1.25rem 0;
       grid-area: domain;
     }
     &__path1 {
       grid-area: path1;
     }
     &__slash {
+      padding: 1.25rem 0;
       grid-area: slash;
     }
     &__path2 {
       grid-area: path2;
+    }
+    &__upload {
+      grid-area: upload;
     }
   }
   &__go {

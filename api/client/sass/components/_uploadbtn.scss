@@ -1,0 +1,21 @@
+.try__req__url__upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+
+  &__btn {
+    border: 1px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 1rem 2rem 1rem 2rem;
+    border-radius: 4px;
+  }
+
+  input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+}

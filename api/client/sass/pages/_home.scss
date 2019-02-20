@@ -2,8 +2,6 @@
   margin-top: -20vh;
   background-color: $color-grey-light;
   padding: 25rem 20vw;
-
-
 }
 
 h1 {
@@ -15,9 +13,10 @@ h1 {
 }
 
 .try {
+  padding-top: 25rem;
+  text-align: center;
   margin-top: -20vh;
   min-height: 120vh;
-  padding-top: 25rem;
   clip-path: polygon(0 20vh, 100% 0, 100% 100%, 0 100%);
   position: relative;
   background: linear-gradient(
@@ -48,10 +47,14 @@ h1 {
   }
 
   &__img {
-    margin: 0 auto;
+    margin: auto;
 
     img {
       max-width: 100%;
     }
+  }
+
+  &__json {
+    padding: 0 25rem
   }
 }

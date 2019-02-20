@@ -1,5 +1,8 @@
 const primary = $('#try__req__url__path1');
 const secondary = $('#try__req__url__path2');
+const slash = $('.try__req__url__slash');
+const domain = $('.try__req__url__domain');
+const upload = $('.try__req__url__upload');
 
 const goBtn = $('.try__req__go');
 const mthdBtn = $('.try__req__method');
@@ -9,9 +12,26 @@ primary.change(() => {
     populateOptions();
 });
 
-mthdBtn.click(() => {
-    mthdBtn.text().trim() !== 'Get' ? mthdBtn.text('Get') : mthdBtn.text('Post')
-});
+// mthdBtn.click(() => {
+//     if (mthdBtn.text().trim() !== 'Get') {
+//         mthdBtn.text('Get');
+//         primary.removeClass('u-hidden');
+//         secondary.removeClass('u-hidden');
+//         slash.removeClass('u-hidden');
+//         upload.addClass('u-hidden');
+//         domain.text('https://samoyeds.cc/');
+//         $('.try__req__url').css( "grid-template-columns", "6fr 4fr 1fr 9fr 2fr")
+//
+//     } else {
+//         mthdBtn.text('Post');
+//         primary.addClass('u-hidden');
+//         secondary.addClass('u-hidden');
+//         slash.addClass('u-hidden');
+//         upload.removeClass('u-hidden');
+//         domain.text('https://samoyeds.cc/upload');
+//         $('.try__req__url').css( "grid-template-columns", "6fr 4fr 1fr 2fr 9fr")
+//     }
+// });
 
 goBtn.click(() => {
     let method = $('.try__req__method').text().trim();
