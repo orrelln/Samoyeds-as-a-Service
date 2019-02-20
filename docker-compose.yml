@@ -44,6 +44,7 @@ services:
     tty: true
     volumes:
       - './api:/api'
+      - /api/node_modules
       - images:/images
     environment:
       POSTGRES_USER: ${POSTGRES_USER}

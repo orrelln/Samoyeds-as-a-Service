@@ -10,7 +10,7 @@ router.get('/:breed', (req, res) => {
         const requestedBreed = req.params.breed.toLowerCase();
         const count = isNaN(req.query.count) ? 1 : req.query.count;
         const safe_mode = isNaN(req.query.safe_mode) ? true : req.query.safe_mode;
-
+        const threshold = isNaN(req.query.threshold) ? 0.75 : req.query.threshold;
 
         if (!breed.includes(requestedBreed)) {
             res.status(404).json({
@@ -31,7 +31,7 @@ router.get('/:breed', (req, res) => {
         }
         else {
             try {
-                let result = await selectBreed(requestedBreed, count, safe_mode);
+                let result = await selectBreed(requestedBreed, count, safe_mode, threshold);
                 res.status(200).json({
                     status: 'success',
                     message: idToImgPath(result, req)

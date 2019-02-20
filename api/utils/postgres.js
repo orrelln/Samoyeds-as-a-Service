@@ -150,16 +150,16 @@ async function selectIdProcessing(id) {
 }
 
 // Selects random image path by breed from image_data table
-async function selectBreed(breed, count = 1, safe_mode) {
+async function selectBreed(breed, count = 1, safe_mode, threshold) {
     const client = await pgPool.connect();
     let ids = [];
     const query = {
         text: 'SELECT images.id, breed\n' +
             'FROM images INNER JOIN predictions on images.id=predictions.id\n' +
-            'WHERE '  + (safe_mode ? 'safe_mode is true and ' : '') + 'breed = $1\n' +
+            'WHERE '  + (safe_mode ? 'safe_mode is true and ' : '') + 'breed = $1 and percentage > $2\n' +
             'ORDER BY RANDOM()\n' +
-            'LIMIT $2\n',
-        values: [breed, count]
+            'LIMIT $3\n',
+        values: [breed, threshold, count]
     };
     try {
         const res = await client.query(query);
