@@ -27,10 +27,24 @@ h1 {
   url("../assets/field.jpg") no-repeat center center;
   background-size: cover;
 
-  &__url {
-    background-color: $color-grey-light;
-    text-align: left;
-    border-radius: 2px;
+  &__req {
+
+    &__method {
+      background-color: $color-secondary;
+      cursor: pointer;
+    }
+
+    &__url {
+      background-color: $color-grey-light;
+
+      &__slash {
+        text-align: center;
+      }
+    }
+    &__go {
+      background-color: $color-white;
+      cursor: pointer;
+    }
   }
 
   &__img {

@@ -1,27 +1,34 @@
-const primary = $('#try__url__primary');
-const secondary = $('#try__url__secondary');
-const goBtn = $('.try__btn');
+const primary = $('#try__req__url__path1');
+const secondary = $('#try__req__url__path2');
+
+const goBtn = $('.try__req__go');
+const mthdBtn = $('.try__req__method');
 
 populateOptions();
-
 primary.change(() => {
     populateOptions();
 });
 
+mthdBtn.click(() => {
+    mthdBtn.text().trim() !== 'Get' ? mthdBtn.text('Get') : mthdBtn.text('Post')
+});
+
 goBtn.click(() => {
-    let primaryOption = `${$( "#try__url__primary option:selected" ).text()}`;
-    let secondaryOption =  `${$( "#try__url__secondary option:selected" ).text()}`;
+    let method = $('.try__req__method').text().trim();
+    console.log(method);
+    let primaryOption = `${$( "#try__req__url__path1 option:selected" ).text()}`;
+    let secondaryOption =  `${$( "#try__req__url__path2 option:selected" ).text()}`;
     $.ajax({
-        type: 'GET',
+        type: method,
         url: `/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             console.log("Success!");
             $('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
-            $('.payload').text(res).removeClass('u-hidden');
+            $('.payload').text(JSON.stringify(res)).removeClass('u-hidden');
         },
         error: (err) => {
-            console.log(err);
+            console.log(`Error: ${JSON.stringify(err)}`);
             $('.payload').text('Error requesting image, check console for details.')
         }
     });
@@ -38,11 +45,11 @@ function populateOptions() {
                 secondary.append(`<option value='${breed}'>${breed}</option>`);
             }
         }
-        else if (primary.val() === 'category') {
+        /*else if (primary.val() === 'category') {
             for (let category of categories) {
                 secondary.append(`<option value='${category}'>${category}</option>`)
             }
-        }
+        }*/
         else {
             secondary.addClass('u-hidden');
         }
