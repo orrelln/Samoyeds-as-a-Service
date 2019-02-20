@@ -221,11 +221,18 @@ pre {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center; }
+  @media (max-width: 1199px) {
+    .header {
+      clip-path: initial; } }
 
 .about {
   margin-top: -20vh;
   background-color: #F7F7F7;
   padding: 25rem 20vw; }
+  @media (max-width: 1199px) {
+    .about {
+      margin-top: initial;
+      padding: 4rem 20vw; } }
 
 h1 {
   padding-bottom: 3rem; }
@@ -258,3 +265,8 @@ h1 {
       max-width: 100%; }
   .try__json {
     padding: 0 25rem; }
+  @media (max-width: 1199px) {
+    .try {
+      clip-path: initial;
+      margin-top: initial;
+      padding-top: 4rem; } }

@@ -8,6 +8,7 @@ const goBtn = $('.try__req__go');
 const mthdBtn = $('.try__req__method');
 
 populateOptions();
+
 primary.change(() => {
     populateOptions();
 });
@@ -64,6 +65,7 @@ function populateOptions() {
             for (let breed of breeds) {
                 secondary.append(`<option value='${breed}'>${breed}</option>`);
             }
+            secondary.val("samoyed");
         }
         /*else if (primary.val() === 'category') {
             for (let category of categories) {

@@ -2,6 +2,11 @@
   margin-top: -20vh;
   background-color: $color-grey-light;
   padding: 25rem 20vw;
+
+  @include for-size(under-desktop){
+    margin-top: initial;
+    padding: 4rem 20vw;
+  }
 }
 
 h1 {
@@ -57,4 +62,11 @@ h1 {
   &__json {
     padding: 0 25rem
   }
+
+  @include for-size(under-desktop){
+    clip-path: initial;
+    margin-top: initial;
+    padding-top: 4rem;
+  }
+
 }

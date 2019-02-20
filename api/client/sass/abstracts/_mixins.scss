@@ -1,6 +1,13 @@
-@mixin hoverable {
-  &:hover {
-    transform: translateY(-.3rem);
-    box-shadow: 0 1rem 2rem rgba($color-black,.2);
+@mixin for-size($size) {
+  @if $size == big-desktop-only {
+    @media (min-width: 1800px) { @content; }
+  } @else if $size == under-tablet-p {
+    @media (max-width: 599px) { @content; }
+  } @else if $size == under-tablet-ls {
+    @media (max-width: 899px) { @content; }
+  } @else if $size == under-desktop {
+    @media (max-width: 1199px) { @content; }
+  } @else if $size == under-big-desktop {
+    @media (max-width: 1799px) { @content; }
   }
 }

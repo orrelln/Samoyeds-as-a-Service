@@ -20,4 +20,8 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
+
+  @include for-size(under-desktop){
+    clip-path: initial;
+  }
 }
