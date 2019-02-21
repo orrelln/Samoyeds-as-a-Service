@@ -8,6 +8,11 @@ const goBtn = $('.try__req__go');
 const mthdBtn = $('.try__req__method');
 
 const uploadReader = new FileReader();
+let file;
+
+function stringify(text) {
+    return JSON.stringify(text, undefined, 4);
+}
 
 populateOptions();
 primary.change(() => {
@@ -47,32 +52,37 @@ goBtn.click(() => {
             success: (res) => {
                 console.log("Success!");
                 $('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
-                $('.payload').text(JSON.stringify(res, undefined, 4)).removeClass('u-hidden');
+                $('.payload').text(stringify(res)).removeClass('u-hidden');
             },
             error: (err) => {
-                console.log(`Error: ${JSON.stringify(err)}`);
+                console.log(`Error: ${stringify(err)}`);
                 $('.payload').text('Error requesting image, check console for details.')
             }
         });
     } else {
         if (uploadReader.result) {
+            let fd = new FormData();
+            fd.append('photo', file, file.name);
             console.log(uploadReader);
+            let url;
             $.ajax({
                 type: 'POST',
                 url: '/upload',
                 //contentType: "application/json; charset=UTF-8",
                 processData: false,
                 dataType: 'json',
-                data: {'photo': uploadReader.result},
+                data: fd,
                 contentType: false,
                 success: (res) => {
                     console.log("Success!");
-                    console.log(res.message[0]);
+                    url = res.message.link;
                     //$('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
-                    $('.payload').text(JSON.stringify(res)).removeClass('u-hidden');
+                    $('.payload').text(stringify(res)).removeClass('u-hidden');
+                    setTimeout(function () {ajaxRepeat(url);}, 500);
+
                 },
                 error: (err) => {
-                    console.log(`Error: ${JSON.stringify(err)}`);
+                    console.log(`Error: ${stringify(err)}`);
                     $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
                 }
             });
@@ -103,12 +113,32 @@ function populateOptions() {
     }
 }
 
+function ajaxRepeat(url) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: (res) => {
+            $('.payload').text(stringify(res)).removeClass('u-hidden');
+            if (res.message.processing_status === 'processing' ||
+                res.message.processing_status === 'approved') {
+                setTimeout(function () {ajaxRepeat(url);}, 500);
+            }
+        },
+        error: (err) => {
+            console.log(`Error: ${stringify(err)}`);
+            $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
+        }
+    });
+}
+
 uploadReader.onload = function (e) {
     $('.res_image').attr('src', e.target.result).removeClass('u-hidden');
 };
 
 function readURL(input) {
     if (input.files && input.files[0]) {
+        file = input.files[0];
         uploadReader.readAsDataURL(input.files[0]);
     }
 }
