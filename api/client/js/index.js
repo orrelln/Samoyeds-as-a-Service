@@ -22,18 +22,18 @@ primary.change(() => {
 mthdBtn.click(() => {
     if (mthdBtn.text().trim() !== 'Get') {
         mthdBtn.text('Get');
-        primary.removeClass('u-hidden');
-        secondary.removeClass('u-hidden');
-        slash.removeClass('u-hidden');
-        upload.addClass('u-hidden');
+        primary.removeClass('u-remove');
+        secondary.removeClass('u-remove');
+        slash.removeClass('u-remove');
+        upload.addClass('u-remove');
         domain.text('https://samoyeds.cc/');
         $('.try__req').css( "grid-template-columns", "1fr 2fr 6fr 0 1fr");
     } else {
-        upload.removeClass('u-hidden');
+        upload.removeClass('u-remove');
         mthdBtn.text('Post');
-        primary.addClass('u-hidden');
-        secondary.addClass('u-hidden');
-        slash.addClass('u-hidden');
+        primary.addClass('u-remove');
+        secondary.addClass('u-remove');
+        slash.addClass('u-remove');
         domain.text('https://samoyeds.cc/upload');
         $('.try__req').css( "grid-template-columns", "1fr 2fr 0 4fr 1fr");
     }

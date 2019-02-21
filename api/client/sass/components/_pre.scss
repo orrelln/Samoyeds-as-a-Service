@@ -9,4 +9,5 @@ pre {
   word-wrap: break-word;
   background-color: transparentize($color-grey-light, 0.05);
   border-radius: 5px;
+  overflow: scroll;
 }
