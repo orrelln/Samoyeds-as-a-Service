@@ -1,4 +1,4 @@
-.try__req__url__upload {
+.try__req__upload {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -6,7 +6,7 @@
   &__btn {
     border: 1px solid gray;
     color: gray;
-    background-color: white;
+    background-color: transparent;
     padding: 1rem 2rem 1rem 2rem;
     border-radius: 4px;
   }
@@ -17,5 +17,7 @@
     left: 0;
     top: 0;
     opacity: 0;
+    margin: 0;
+    padding: 0;
   }
 }

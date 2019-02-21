@@ -1,15 +1,19 @@
 .try__req {
   display: grid;
-  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-columns: 1fr 2fr 6fr 0 1fr;
   grid-column-gap: 2rem;
-  grid-template-areas:
-          'method url go';
-
+  grid-template-areas: 'method domain url upload go';
   &__method {
     grid-area: method;
   }
+  &__domain {
+    grid-area: domain;
+  }
   &__url {
     grid-area: url;
+  }
+  &__upload {
+    grid-area: upload;
   }
   &__go {
     grid-area: go;

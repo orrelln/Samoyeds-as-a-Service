@@ -155,32 +155,38 @@ pre {
   border: 1px solid #ccc;
   border-radius: 4px; }
 
-.try__req__url__upload {
+.try__req__upload {
   position: relative;
   overflow: hidden;
   display: inline-block; }
-  .try__req__url__upload__btn {
+  .try__req__upload__btn {
     border: 1px solid gray;
     color: gray;
-    background-color: white;
+    background-color: transparent;
     padding: 1rem 2rem 1rem 2rem;
     border-radius: 4px; }
-  .try__req__url__upload input[type=file] {
+  .try__req__upload input[type=file] {
     font-size: 100px;
     position: absolute;
     left: 0;
     top: 0;
-    opacity: 0; }
+    opacity: 0;
+    margin: 0;
+    padding: 0; }
 
 .try__req {
   display: grid;
-  grid-template-columns: 1fr 8fr 1fr;
+  grid-template-columns: 1fr 2fr 6fr 0 1fr;
   grid-column-gap: 2rem;
-  grid-template-areas: 'method url go'; }
+  grid-template-areas: 'method domain url upload go'; }
   .try__req__method {
     grid-area: method; }
+  .try__req__domain {
+    grid-area: domain; }
   .try__req__url {
     grid-area: url; }
+  .try__req__upload {
+    grid-area: upload; }
   .try__req__go {
     grid-area: go; }
 
@@ -229,6 +235,13 @@ h1 {
   .try__req__url {
     text-align: left;
     margin: auto 0; }
+  .try__req__domain {
+    text-align: left;
+    margin: auto 0; }
+  .try__req__upload {
+    margin: 0; }
+    .try__req__upload__btn {
+      height: 100%; }
   .try__img {
     margin: auto; }
     .try__img img {

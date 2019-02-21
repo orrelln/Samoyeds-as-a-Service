@@ -37,6 +37,17 @@ h1 {
       text-align: left;
       margin: auto 0;
     }
+    &__domain {
+      text-align: left;
+      margin: auto 0;
+    }
+    &__upload {
+      margin: 0;
+
+      &__btn {
+        height: 100%;
+      }
+    }
   }
 
   &__img {

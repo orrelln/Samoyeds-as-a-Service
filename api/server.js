@@ -9,7 +9,7 @@ const port = process.env.PORT || 8000;
 const mode = process.env.MODE || 'local';
 
 // Utilize body-parser middleware to easily handle JSON
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '2mb'}));
 
 
 // Handle routes
