@@ -182,6 +182,9 @@ pre {
   grid-template-columns: 1fr 2fr 6fr 0 1fr;
   grid-column-gap: 2rem;
   grid-template-areas: 'method domain url upload go'; }
+  @media (max-width: 1199px) {
+    .try__req {
+      grid-template-areas: 'method domain domain upload go' 'method url url upload go'; } }
   .try__req__method {
     grid-area: method; }
   .try__req__domain {

@@ -20,8 +20,8 @@ primary.change(() => {
 });
 
 mthdBtn.click(() => {
-    if (mthdBtn.text().trim() !== 'Get') {
-        mthdBtn.text('Get');
+    if (mthdBtn.text().trim() !== 'GET') {
+        mthdBtn.text('GET');
         primary.removeClass('u-remove');
         secondary.removeClass('u-remove');
         slash.removeClass('u-remove');
@@ -30,7 +30,7 @@ mthdBtn.click(() => {
         $('.try__req').css( "grid-template-columns", "1fr 2fr 6fr 0 1fr");
     } else {
         upload.removeClass('u-remove');
-        mthdBtn.text('Post');
+        mthdBtn.text('POST');
         primary.addClass('u-remove');
         secondary.addClass('u-remove');
         slash.addClass('u-remove');
@@ -40,7 +40,7 @@ mthdBtn.click(() => {
 });
 
 goBtn.click(() => {
-    if (mthdBtn.text().trim() === 'Get') {
+    if (mthdBtn.text().trim() === 'GET') {
         let method = $('.try__req__method').text().trim();
         console.log(method);
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
