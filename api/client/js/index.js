@@ -87,6 +87,7 @@ goBtn.click(() => {
                 }
             });
         }
+        file = null;
     }
 });
 
