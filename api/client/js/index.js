@@ -47,7 +47,7 @@ goBtn.click(() => {
             success: (res) => {
                 console.log("Success!");
                 $('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
-                $('.payload').text(JSON.stringify(res)).removeClass('u-hidden');
+                $('.payload').text(JSON.stringify(res, undefined, 4)).removeClass('u-hidden');
             },
             error: (err) => {
                 console.log(`Error: ${JSON.stringify(err)}`);

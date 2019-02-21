@@ -151,9 +151,8 @@ pre {
   color: #333;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #F7F7F7;
-  border: 1px solid #ccc;
-  border-radius: 4px; }
+  background-color: rgba(247, 247, 247, 0.95);
+  border-radius: 5px; }
 
 .try__req__upload {
   position: relative;
@@ -247,7 +246,8 @@ h1 {
     .try__img img {
       max-width: 100%; }
   .try__json {
-    padding: 0 25rem; }
+    padding: 0 0;
+    text-align: left; }
   @media (max-width: 1199px) {
     .try {
       clip-path: initial;

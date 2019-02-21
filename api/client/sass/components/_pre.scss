@@ -7,7 +7,6 @@ pre {
   color: #333;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: $color-grey-light;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: transparentize($color-grey-light, 0.05);
+  border-radius: 5px;
 }

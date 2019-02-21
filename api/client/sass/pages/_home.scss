@@ -59,7 +59,8 @@ h1 {
   }
 
   &__json {
-    padding: 0 25rem
+    padding: 0 0;
+    text-align: left;
   }
 
   @include for-size(under-desktop){
