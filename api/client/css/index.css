@@ -133,11 +133,11 @@ select {
   border: 1px solid #777;
   width: inherit;
   padding: 0 1rem;
-  margin: 1rem .5rem;
+  margin: auto .5rem;
   min-width: 5rem;
   -webkit-appearance: none;
   background-color: #FFF;
-  height: 70%; }
+  height: 50%; }
 
 pre {
   display: block;
@@ -172,8 +172,12 @@ pre {
 .try__req {
   display: grid;
   padding: 4rem 20vw 0;
-  grid-template-columns: 1.5fr 8fr .5fr 1.5fr;
+  grid-template-columns: 1fr 9fr .25fr 1fr;
   grid-template-areas: 'mthd url . go'; }
+  @media (max-width: 1199px) {
+    .try__req {
+      grid-template-columns: 2fr 9.5fr;
+      grid-template-areas: 'mthd url' 'go go'; } }
   .try__req__method {
     grid-area: mthd;
     display: flex;
@@ -183,19 +187,36 @@ pre {
     color: #FFF;
     border-radius: 2px; }
   .try__req__url {
-    padding: 1rem 0 1rem 1rem;
+    padding: 0 1rem;
     grid-area: url;
     display: grid;
-    grid-template-columns: 6fr 4fr 1fr 9fr 2fr;
+    grid-template-columns: 4fr 4fr .5fr 9.5fr 2fr;
     grid-template-areas: 'domain path1 slash path2 upload'; }
+    @media (max-width: 1199px) {
+      .try__req__url {
+        grid-template-columns: 9fr 1fr;
+        grid-template-rows: 1fr 1.5fr 1.5fr 0;
+        grid-template-areas: "domain domain" "path1 slash" "path2 path2" "upload upload"; } }
     .try__req__url__domain {
-      padding: 1.25rem 0;
-      grid-area: domain; }
+      grid-area: domain;
+      display: table;
+      height: 100%;
+      width: 100%; }
+      .try__req__url__domain p {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle; }
     .try__req__url__path1 {
       grid-area: path1; }
     .try__req__url__slash {
-      padding: 1.25rem 0;
-      grid-area: slash; }
+      grid-area: slash;
+      display: table;
+      height: 100%;
+      width: 100%; }
+      .try__req__url__slash p {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle; }
     .try__req__url__path2 {
       grid-area: path2; }
     .try__req__url__upload {
@@ -254,8 +275,6 @@ h1 {
     cursor: pointer; }
   .try__req__url {
     background-color: #F7F7F7; }
-    .try__req__url__slash {
-      text-align: center; }
   .try__req__go {
     background-color: #FFF;
     cursor: pointer; }
