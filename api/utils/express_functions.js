@@ -3,8 +3,9 @@ module.exports = {
         try {
             if (id instanceof Array) {
                 let paths = [];
+                hostName = req.hostname.includes('www.') ? req.hostname.substring(4) : req.hostname;
                 id.forEach((obj) => {
-                    paths.push(`img.${req.hostname}/${obj}`);
+                    paths.push(`img.${hostName}/${obj}`);
                 });
                 return paths;
             } else {

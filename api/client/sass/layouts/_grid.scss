@@ -1,83 +1,17 @@
 .try__req {
   display: grid;
-  padding: 4rem 20vw 0;
-  grid-template-columns: 1fr 9fr .25fr 1fr;
+  grid-template-columns: 1fr 8fr 1fr;
+  grid-column-gap: 2rem;
   grid-template-areas:
-      'mthd url . go';
-
-  @include for-size(under-desktop) {
-    grid-template-columns: 2fr 9.5fr;
-    grid-template-areas:
-            'mthd url'
-            'go go';
-  }
+          'method url go';
 
   &__method {
-    grid-area: mthd;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    color: $color-white;
-    border-radius: 2px;
+    grid-area: method;
   }
-
   &__url {
-    padding: 0 1rem;
     grid-area: url;
-    display: grid;
-    grid-template-columns: 4fr 4fr .5fr 9.5fr 2fr;
-    grid-template-areas:
-      'domain path1 slash path2 upload';
-
-    @include for-size(under-desktop) {
-      grid-template-columns: 9fr 1fr;
-      grid-template-rows: 1fr 1.5fr 1.5fr 0;
-      grid-template-areas:
-              "domain domain"
-              "path1 slash"
-              "path2 path2"
-              "upload upload";
-    }
-    &__domain {
-      grid-area: domain;
-      display: table;
-      height: 100%;
-      width: 100%;
-
-      p {
-        display: table-cell;
-        text-align: center;
-        vertical-align: middle;
-      }
-    }
-    &__path1 {
-      grid-area: path1;
-    }
-    &__slash {
-      grid-area: slash;
-      display: table;
-      height: 100%;
-      width: 100%;
-
-      p {
-        display: table-cell;
-        text-align: center;
-        vertical-align: middle;
-      }
-    }
-    &__path2 {
-      grid-area: path2;
-    }
-    &__upload {
-      grid-area: upload;
-    }
   }
   &__go {
     grid-area: go;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
   }
 }

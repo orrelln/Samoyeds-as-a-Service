@@ -40,24 +40,17 @@
 <div class="try">
 
     <div class="try__req">
-            <div class="try__req__method">
-                Get
-            </div>
-            <div class="try__req__url">
-                <div class="try__req__url__domain"><p>https://samoyeds.cc/</p></div>
-                <div class="try__req__url__upload u-hidden">
-                    <button class="try__req__url__upload__btn">Upload a file</button>
-                    <input type="file" name="myfile" />
-                </div>
-                <select id="try__req__url__path1">
-                    <option value="breed">breed</option>
-                    <!--<option value="category">category</option>-->
-                    <option value="random">random</option>
-                </select>
-                <div class="try__req__url__slash"><p>/</p></div>
-                <select id="try__req__url__path2"></select>
-            </div>
-        <div class="try__req__go btn--hover">Go!</div>
+        <a href="javascript:void(0);" class="try__req__method btn btn--tryit btn--blue">GET</a>
+        <div class="try__req__url">
+            <span>http://samoyeds.cc/</span>
+            <select class="try__req__path1">
+                <option value="breed">breed</option>
+                <option value="random">random</option>
+            </select>
+            <span>/</span>
+            <select class="try__req__path2"></select>
+        </div>
+        <a href="javascript:void(0);" class="try__req__go btn btn--tryit btn--clear">Request</a>
     </div>
 
     <div class="try__img">

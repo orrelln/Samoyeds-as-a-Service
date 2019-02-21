@@ -1,16 +1,29 @@
 .btn {
   &:link,
   &:visited {
-    text-transform: uppercase;
     text-decoration: none;
-    padding: 1.5rem 4rem;
     display: inline-block;
     transition: all .2s;
     position: relative;
     font-size: 1.6rem;
   }
 
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+
   &--header {
+    text-transform: uppercase;
+    padding: 1.5rem 4rem;
     border-radius: 10rem;
 
     &:hover {
@@ -33,7 +46,8 @@
 
 
   &--tryit {
-    border-radius: 2px;
+    border-radius: 5px;
+    padding: 1rem 2rem;
   }
 
   &--white {
@@ -49,6 +63,7 @@
   &--blue {
     background-color: $color-secondary;
     color: $color-white;
+    border: 1px solid $color-secondary;
 
     &::after {
       background-color: $color-secondary;
@@ -56,28 +71,20 @@
 
   }
 
-  &::after {
-    content: "";
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    border-radius: 10rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: all .4s;
-  }
+  &--clear {
+    background-color: transparent;
+    color: $color-black;
+    border: 1px solid $color-black;
 
-  &--animated {
-    animation: moveInBottom .5s ease-out .75s;
-    animation-fill-mode: backwards;
-  }
+    &::after {
+      background-color: transparent;
+    }
 
-  &--hover {
     &:hover {
-      transform: translateY(-.3rem);
-      box-shadow: 0 1rem 2rem rgba($color-black,.2);
+      background-color: $color-secondary;
+      color: $color-white;
+      border: 1px solid $color-secondary;
     }
   }
+
 }
