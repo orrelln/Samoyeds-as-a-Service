@@ -54,7 +54,7 @@ goBtn.click(() => {
                 console.log("Success!");
                 let render = stringify(res);
                 $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
-                render = render.replace(`"${res.message[0]}"`, `"<span class="u-copy">${res.message[0]}</span>"` );
+                render = render.replace(`"${res.message[0]}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0]}</span>"` );
                 $('.payload').html(render).removeClass('u-hidden');
             },
             error: (err) => {
@@ -136,6 +136,20 @@ function ajaxRepeat(url) {
     });
 }
 
+function copy_into_clipboard() {
+    console.log('www');
+    let modal = $('.modal');
+    modal.removeClass('modal--animate');
+
+    let $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($('.u-copy').text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+
+    modal.addClass('modal--animate');
+}
+
 uploadReader.onload = function (e) {
     $('.res_image').attr('src', e.target.result).removeClass('u-hidden');
 };
@@ -151,16 +165,3 @@ $(".try__req__upload__file").change(function(){
     readURL(this);
 });
 
-$('.u-copy').click(() => {
-    console.log('www');
-    let modal = $('.modal');
-    modal.removeClass('modal--animate');
-
-    let $temp = $("<input>");
-    $("body").append($temp);
-    $temp.val($('.u-copy').text()).select();
-    document.execCommand("copy");
-    $temp.remove();
-
-    modal.addClass('modal--animate');
-});

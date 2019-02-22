@@ -225,7 +225,7 @@ select {
   grid-template-areas: 'method domain request go'; }
   @media (max-width: 1799px) {
     .try__req {
-      grid-template-areas: 'method domain domain go' 'method request request go'; } }
+      grid-template-areas: 'method domain domain go' 'method request request go'; } }
   .try__req__method {
     grid-area: method; }
   .try__req__domain {
