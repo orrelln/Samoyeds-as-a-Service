@@ -7,6 +7,8 @@
     @media (max-width: 899px) { @content; }
   } @else if $size == under-desktop {
     @media (max-width: 1199px) { @content; }
+  } @else if $size == under-med-desktop {
+    @media (max-width: 1399px) { @content; }
   } @else if $size == under-big-desktop {
     @media (max-width: 1799px) { @content; }
   }

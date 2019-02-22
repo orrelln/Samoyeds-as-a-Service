@@ -51,9 +51,15 @@ h1 {
 .title {
   font-size: 2rem;
   font-weight: 600; }
+  @media (max-width: 899px) {
+    .title {
+      font-size: 3.5vmin; } }
 
 .content {
   font-size: 1.5rem; }
+  @media (max-width: 899px) {
+    .content {
+      font-size: 2.5vmin; } }
 
 select {
   font-size: inherit; }
@@ -163,6 +169,8 @@ pre {
   overflow: hidden;
   display: inline-block; }
   .try__req__upload__btn {
+    float: left;
+    width: 50%;
     border: 1px solid gray;
     color: gray;
     background-color: transparent;
@@ -179,20 +187,20 @@ pre {
 
 .try__req {
   display: grid;
-  grid-template-columns: 1fr 2fr 6fr 0 1fr;
+  grid-template-columns: 1fr 2fr 6fr 1fr;
   grid-column-gap: 2rem;
-  grid-template-areas: 'method domain url upload go'; }
-  @media (max-width: 1199px) {
+  grid-template-areas: 'method domain request go'; }
+  @media (max-width: 1799px) {
     .try__req {
-      grid-template-areas: 'method domain domain upload go' 'method url url upload go'; } }
+      grid-template-areas: 'method domain domain go' 'method request request go'; } }
   .try__req__method {
     grid-area: method; }
   .try__req__domain {
     grid-area: domain; }
   .try__req__url {
-    grid-area: url; }
+    grid-area: request; }
   .try__req__upload {
-    grid-area: upload; }
+    grid-area: request; }
   .try__req__go {
     grid-area: go; }
 
@@ -221,7 +229,7 @@ pre {
   @media (max-width: 1199px) {
     .about {
       margin-top: initial;
-      padding: 4rem 4vw 0; } }
+      padding: 4rem 4vw 4rem; } }
 
 h1 {
   padding-bottom: 3rem; }
@@ -230,7 +238,7 @@ h1 {
   padding-top: 2rem; }
 
 .try {
-  padding: 25rem 20vw;
+  padding: 25rem 26.5vw;
   text-align: center;
   margin-top: -20vh;
   min-height: 120vh;
@@ -238,6 +246,15 @@ h1 {
   position: relative;
   background: linear-gradient(to right bottom, rgba(255, 247, 215, 0.8), rgba(178, 155, 63, 0.8)), url("../assets/field.jpg") no-repeat center center;
   background-size: cover; }
+  @media (max-width: 1399px) {
+    .try {
+      padding: 25rem 22.5vw; } }
+  @media (max-width: 1199px) {
+    .try {
+      padding: 25rem 12.5vw; } }
+  @media (max-width: 899px) {
+    .try {
+      padding: 25rem 7.5vw; } }
   .try__req__url {
     text-align: left;
     margin: auto 0; }
@@ -252,7 +269,7 @@ h1 {
     margin: auto;
     height: 40vh; }
     .try__img img {
-      height: 100%;
+      max-height: 100%;
       max-width: 100%; }
   .try__json {
     padding-top: 5rem;

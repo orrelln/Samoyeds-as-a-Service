@@ -1,12 +1,12 @@
 .try__req {
   display: grid;
-  grid-template-columns: 1fr 2fr 6fr 0 1fr;
+  grid-template-columns: 1fr 2fr 6fr 1fr;
   grid-column-gap: 2rem;
-  @include for-size(under-desktop) {
-    grid-template-areas: 'method domain domain upload go'
-                         'method url url upload go';
+  @include for-size(under-big-desktop) {
+    grid-template-areas: 'method domain domain go'
+                         'method request request go';
   }
-  grid-template-areas: 'method domain url upload go';
+  grid-template-areas: 'method domain request go';
   &__method {
     grid-area: method;
   }
@@ -14,10 +14,10 @@
     grid-area: domain;
   }
   &__url {
-    grid-area: url;
+    grid-area: request;
   }
   &__upload {
-    grid-area: upload;
+    grid-area: request;
   }
   &__go {
     grid-area: go;

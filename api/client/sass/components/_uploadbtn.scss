@@ -4,6 +4,8 @@
   display: inline-block;
 
   &__btn {
+    float: left;
+    width: 50%;
     border: 1px solid gray;
     color: gray;
     background-color: transparent;
