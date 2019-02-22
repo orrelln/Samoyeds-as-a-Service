@@ -5,11 +5,11 @@ module.exports = {
                 let paths = [];
                 hostName = req.hostname.includes('www.') ? req.hostname.substring(4) : req.hostname;
                 id.forEach((obj) => {
-                    paths.push(`img.${hostName}/${obj}`);
+                    paths.push(`http://img.${hostName}/${obj}`);
                 });
                 return paths;
             } else {
-                return `img.${req.hostname}/${id}`;
+                return `http://img.${req.hostname}/${id}`;
             }
         } catch (e) {
             console.log(e)

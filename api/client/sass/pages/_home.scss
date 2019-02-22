@@ -1,7 +1,7 @@
 .about {
   margin-top: -20vh;
   background-color: $color-grey-light;
-  padding: 25rem 20vw;
+  padding: 25rem 20vw 40vh;
 
   @include for-size(under-desktop){
     margin-top: initial;
