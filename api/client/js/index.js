@@ -152,8 +152,9 @@ $(".try__req__upload__file").change(function(){
 });
 
 $('.u-copy').click(() => {
-    let alert = $('.modal');
-    alert.removeClass('modal--animate');
+    console.log('www');
+    let modal = $('.modal');
+    modal.removeClass('modal--animate');
 
     let $temp = $("<input>");
     $("body").append($temp);
@@ -161,5 +162,5 @@ $('.u-copy').click(() => {
     document.execCommand("copy");
     $temp.remove();
 
-    alert.addClass('modal--animate');
+    modal.addClass('modal--animate');
 });
