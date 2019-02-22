@@ -182,8 +182,10 @@ select {
   -webkit-appearance: none;
   height: 50%; }
 
-pre {
+.payload {
   display: block;
+  white-space: pre;
+  font-family: monospace;
   padding: 9.5px;
   margin: 0 0 10px;
   font-size: 2rem;
