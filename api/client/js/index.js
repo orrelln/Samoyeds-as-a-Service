@@ -53,7 +53,7 @@ goBtn.click(() => {
             success: (res) => {
                 console.log("Success!");
                 $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
-                res.message[0] = `<span class="u_copy">${res.message[0]}</span>`;
+                res.message = `[<span class="u_copy">"${res.message[0]}"</span>]`;
                 $('.payload').text(stringify(res)).removeClass('u-hidden');
             },
             error: (err) => {
