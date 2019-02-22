@@ -52,7 +52,8 @@ goBtn.click(() => {
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             success: (res) => {
                 console.log("Success!");
-                $('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
+                $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
+                res.message[0] = `<span class="u_copy">${res.message[0]}</span>`;
                 $('.payload').text(stringify(res)).removeClass('u-hidden');
             },
             error: (err) => {
@@ -149,3 +150,15 @@ $(".try__req__upload__file").change(function(){
     readURL(this);
 });
 
+$('.u-copy').click(() => {
+    let alert = $('.modal');
+    alert.removeClass('modal--animate');
+
+    let $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($('.u-copy').text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+
+    alert.addClass('modal--animate');
+});
