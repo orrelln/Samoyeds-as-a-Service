@@ -52,9 +52,10 @@ goBtn.click(() => {
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             success: (res) => {
                 console.log("Success!");
+                let render = stringify(res);
                 $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
-                res.message = `[<span class="u_copy">"${res.message[0]}"</span>]`;
-                $('.payload').text(stringify(res)).removeClass('u-hidden');
+                render.replace(res.message[0], `<span class="u-copy">${res.mssage[0]}</span>` );
+                $('.payload').text(render).removeClass('u-hidden');
             },
             error: (err) => {
                 console.log(`Error: ${stringify(err)}`);
