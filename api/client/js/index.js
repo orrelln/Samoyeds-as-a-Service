@@ -55,7 +55,7 @@ goBtn.click(() => {
                 let render = stringify(res);
                 $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
                 render = render.replace(`"${res.message[0]}"`, `"<span class="u-copy">${res.message[0]}</span>"` );
-                $('.payload').text(render).removeClass('u-hidden');
+                $('.payload').html(render).removeClass('u-hidden');
             },
             error: (err) => {
                 console.log(`Error: ${stringify(err)}`);
