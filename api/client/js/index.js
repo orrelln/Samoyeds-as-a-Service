@@ -140,40 +140,31 @@ function copy_into_clipboard() {
     console.log('www');
     let modal = $('.modal');
     modal.removeClass('modal--animate');
-    modal.addClass('modal--animate');
-    let $temp = $("<input>");
+    let $temp = $("<input readonly=\"true\">");
     $("body").append($temp);
     $temp.val($('.u-copy').text());
-    console.log($temp);
 
     const isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
     if (isiOSDevice) {
-
-		let editable = $temp.contentEditable;
-		let readOnly = $temp.readOnly;
-
-		$temp.contentEditable = true;
-		$temp.readOnly = false;
+        let el = $temp.get(0);
+		let editable = el.contentEditable;
+		el.contentEditable = true;
 
 		let range = document.createRange();
-		range.selectNodeContents($temp);
+		range.selectNodeContents(el);
 
 		let selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
 
-		$temp.setSelectionRange(0, 999999);
-		$temp.contentEditable = editable;
-		$temp.readOnly = readOnly;
-
+		el.setSelectionRange(0, 999999);
+		el.contentEditable = editable;
 	} else {
 	 	$temp.select();
 	}
-
     document.execCommand("copy");
     $temp.remove();
-
-
+    modal.addClass('modal--animate');
 }
 
 uploadReader.onload = function (e) {
