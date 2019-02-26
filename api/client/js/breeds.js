@@ -2,7 +2,7 @@ const breeds = [
     'affenpinscher','afghan_hound','african_hunting_dog','airedale','american_staffordshire_terrier','appenzeller',
     'australian_terrier','basenji','basset','beagle','bedlington_terrier','bernese_mountain_dog','black-and-tan_coonhound',
     'blenheim_spaniel','bloodhound','bluetick','border_collie','border_terrier','borzoi','boston_bull',
-    'bouvier_des_flandres','boxer','brabancon_griffon','briard,brittany_spaniel','bull_mastiff','cairn','cardigan',
+    'bouvier_des_flandres','boxer','brabancon_griffon','briard','brittany_spaniel','bull_mastiff','cairn','cardigan',
     'chesapeake_bay_retriever','chihuahua','chow','clumber','cocker_spaniel','collie','coyote','curly-coated_retriever',
     'dalmatian','dandie_dinmont','dhole','dingo','doberman','english_foxhound','english_setter','english_springer',
     'entlebucher','eskimo_dog','flat-coated_retriever','french_bulldog','german_shepherd','german_short-haired_pointer',
