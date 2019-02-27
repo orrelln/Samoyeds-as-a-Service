@@ -71,7 +71,6 @@ goBtn.click(() => {
             $.ajax({
                 type: 'POST',
                 url: '/upload',
-                //contentType: "application/json; charset=UTF-8",
                 processData: false,
                 dataType: 'json',
                 data: fd,
