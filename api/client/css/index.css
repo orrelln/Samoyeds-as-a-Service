@@ -152,11 +152,14 @@ select {
   z-index: 1;
   left: 50%;
   top: 110%;
-  background-color: #777;
+  background-color: #667999;
   color: white;
   border-radius: 10px 10px 0 0;
   padding: 1rem 2rem;
   transform: translate(-50%, -50%); }
+  @media (max-width: 1199px) {
+    .modal {
+      border-radius: 10px; } }
   .modal--animate {
     animation: upFade 5s; }
 
@@ -225,7 +228,7 @@ select {
   grid-template-areas: 'method domain request go'; }
   @media (max-width: 1799px) {
     .try__req {
-      grid-template-areas: 'method domain domain go' 'method request request go'; } }
+      grid-template-areas: 'method domain domain go' 'method request request go'; } }
   .try__req__method {
     grid-area: method; }
   .try__req__domain {

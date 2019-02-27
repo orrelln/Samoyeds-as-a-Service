@@ -137,13 +137,14 @@ function ajaxRepeat(url) {
 }
 
 function copy_into_clipboard() {
-    console.log('www');
     let modal = $('.modal');
-    modal.removeClass('modal--animate');
     let $temp = $("<input readonly=\"true\">");
+
+    modal.removeClass('modal--animate');
     $("body").append($temp);
     $temp.val($('.u-copy').text());
 
+    // Detects mobile Apple devices and copies to clipboard correctly if so
     const isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
     if (isiOSDevice) {
         let el = $temp.get(0);
@@ -159,9 +160,11 @@ function copy_into_clipboard() {
 
 		el.setSelectionRange(0, 999999);
 		el.contentEditable = editable;
-	} else {
+	}
+	else {
 	 	$temp.select();
 	}
+
     document.execCommand("copy");
     $temp.remove();
     modal.addClass('modal--animate');
@@ -181,4 +184,3 @@ function readURL(input) {
 $(".try__req__upload__file").change(function(){
     readURL(this);
 });
-
