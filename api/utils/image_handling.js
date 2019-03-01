@@ -1,13 +1,14 @@
 const multer = require('multer');
 const uuid = require('uuid/v4');
 const path = require('path');
+const fs = require('fs');
 const imageTypes = ['image/jpeg', 'image/png'];
 
 
 const storage = multer.diskStorage (
     {
         destination: function (req, file, cb) {
-            cb(null, '/images')
+            cb(null, '/temp')
         },
         filename: function (req, file, cb) {
             const newFilename = `${uuid()}${path.extname(file.originalname)}`;
@@ -17,7 +18,7 @@ const storage = multer.diskStorage (
 );
 
 const upload = multer({
-    destination: '/images',
+    destination: '/temp',
     storage: storage,
     limits: {fileSize: 20000000, files:1},
     fileFilter: function (req, file, cb) {
@@ -29,6 +30,18 @@ const upload = multer({
     }
 });
 
+function moveFile(from, to) {
+    const source = fs.createReadStream(from);
+    const dest = fs.createWriteStream(to);
+
+    return new Promise((resolve, reject) => {
+        source.on('end', resolve);
+        source.on('error', reject);
+        source.pipe(dest);
+    });
+}
+
 module.exports = {
-    save: upload.single('photo')
+    save: upload.single('photo'),
+    moveFile
 };

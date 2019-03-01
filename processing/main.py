@@ -63,6 +63,7 @@ def process(ch, method, properties, body):
 
     payload = {
         'id': data['id'],
+        'path': data['path'],
         'predictions': determine_predictions(list_predictions),
         'reject': False
     }
