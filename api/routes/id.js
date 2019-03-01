@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
                 let result = await selectId(id);
                 if (result) {
                     res.status(200).json({
-                        status: 'successs',
+                        status: 'success',
                         message: {
                             image: idToImgPath(result.id, req),
                             breed: result.breed,

@@ -16,7 +16,7 @@ from utils.profiler import timer_avg
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 IMAGE_SIZE = 224
-MODE = os.getenv('MODE', 'local1')
+MODE = os.getenv('MODE', 'local2')
 
 if MODE == 'production':
     print('===  Production')
