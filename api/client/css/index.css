@@ -10,16 +10,14 @@ html {
   scroll-behavior: smooth; }
 
 body {
-  box-sizing: border-box;
-  padding: 0 4rem; }
+  box-sizing: border-box; }
 
 body {
   font-family: "Lato", sans-serif;
   font-weight: 400;
   line-height: 1.7;
   font-size: 2rem;
-  color: #777;
-  padding: 3rem; }
+  color: #777; }
 
 .heading-primary {
   color: #FFF;
@@ -61,11 +59,16 @@ h1 {
     .content {
       font-size: 2.5vmin; } }
 
-select {
-  font-size: inherit; }
+.try__title {
+  background-image: initial;
+  color: #FFF; }
 
 .try__req__url__upload__btn {
   font-size: 1.5rem; }
+
+.footer__about {
+  font-size: 1.5rem;
+  color: #C7C7C7; }
 
 .u-center {
   text-align: center; }
@@ -84,6 +87,9 @@ select {
 
 .u-copy {
   cursor: copy; }
+
+.u-shrink {
+  width: 0; }
 
 .btn:link, .btn:visited {
   text-decoration: none;
@@ -119,8 +125,9 @@ select {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
 
 .btn--tryit {
-  border-radius: 5px;
-  padding: 1rem 2rem; }
+  height: 100%;
+  padding: .5rem 1rem;
+  border-radius: 5px; }
 
 .btn--white {
   background-color: #FFF;
@@ -180,6 +187,7 @@ select {
 select {
   border: 0;
   border-bottom: 1px solid #777;
+  font-size: inherit;
   background-color: transparent;
   padding: 0 1rem;
   -webkit-appearance: none;
@@ -205,13 +213,14 @@ select {
   overflow: hidden;
   display: inline-block; }
   .try__req__upload__btn {
+    font-size: 1.6rem;
     float: left;
-    width: 50%;
     border: 1px solid gray;
     color: gray;
     background-color: transparent;
-    padding: 1rem 2rem 1rem 2rem;
-    border-radius: 4px; }
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    width: 14rem; }
   .try__req__upload input[type=file] {
     font-size: 100px;
     position: absolute;
@@ -222,23 +231,49 @@ select {
     padding: 0; }
 
 .try__req {
-  display: grid;
-  grid-template-columns: 1fr 2fr 6fr 1fr;
-  grid-column-gap: 2rem;
-  grid-template-areas: 'method domain request go'; }
-  @media (max-width: 1799px) {
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: left;
+  align-items: center; }
+  @media (max-width: 1199px) {
     .try__req {
-      grid-template-areas: 'method domain domain go' 'method request request go'; } }
+      max-width: 70%; } }
+  @media (max-width: 899px) {
+    .try__req {
+      max-width: 90%; } }
+  @media (max-width: 599px) {
+    .try__req {
+      max-width: 95%; } }
   .try__req__method {
-    grid-area: method; }
-  .try__req__domain {
-    grid-area: domain; }
-  .try__req__url {
-    grid-area: request; }
+    max-width: 10rem;
+    margin-right: 2rem; }
   .try__req__upload {
-    grid-area: request; }
+    margin-left: auto; }
   .try__req__go {
-    grid-area: go; }
+    max-width: 10rem;
+    flex-shrink: 3;
+    margin-left: 4rem; }
+
+.footer {
+  padding: 10vh 0;
+  background-color: #2D2D2D;
+  color: white; }
+  .footer a {
+    text-decoration: none;
+    color: white; }
+  .footer__links {
+    display: flex;
+    justify-content: center;
+    padding: 0 22vw 4rem; }
+    .footer__links a {
+      flex-grow: 1;
+      text-align: center; }
+      .footer__links a:hover {
+        color: #84669B; }
+  .footer__about {
+    text-align: center;
+    padding: 0 24vw; }
 
 .header {
   height: 95vh;
@@ -265,7 +300,7 @@ select {
   @media (max-width: 1199px) {
     .about {
       margin-top: initial;
-      padding: 4rem 4vw 4rem; } }
+      padding: 8rem 4vw 4rem; } }
 
 h1 {
   padding-bottom: 3rem; }
@@ -274,7 +309,7 @@ h1 {
   padding-top: 2rem; }
 
 .try {
-  padding: 25rem 26.5vw;
+  padding: 25rem 0;
   text-align: center;
   margin-top: -20vh;
   min-height: 120vh;
@@ -282,25 +317,6 @@ h1 {
   position: relative;
   background: linear-gradient(to right bottom, rgba(255, 247, 215, 0.8), rgba(178, 155, 63, 0.8)), url("../assets/field.jpg") no-repeat center center;
   background-size: cover; }
-  @media (max-width: 1399px) {
-    .try {
-      padding: 25rem 22.5vw; } }
-  @media (max-width: 1199px) {
-    .try {
-      padding: 25rem 12.5vw; } }
-  @media (max-width: 899px) {
-    .try {
-      padding: 25rem 7.5vw; } }
-  .try__req__url {
-    text-align: left;
-    margin: auto 0; }
-  .try__req__domain {
-    text-align: left;
-    margin: auto 0; }
-  .try__req__upload {
-    margin: 0; }
-    .try__req__upload__btn {
-      height: 100%; }
   .try__img {
     margin: auto;
     height: 40vh; }

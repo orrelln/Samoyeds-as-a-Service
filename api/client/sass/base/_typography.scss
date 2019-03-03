@@ -4,7 +4,6 @@ body {
   line-height: 1.7;
   font-size: 2rem;
   color: $color-grey-dark;
-  padding: 3rem;
 }
 
 .heading-primary {
@@ -57,11 +56,20 @@ h1 {
   }
 }
 
-select {
-  font-size: inherit;
+.try {
+  &__title {
+    background-image: initial;
+    color: $color-white;
+  }
+  &__req__url__upload__btn {
+    font-size: 1.5rem;
+  }
 }
 
-.try__req__url__upload__btn {
-  font-size: 1.5rem;
+.footer {
+  &__about {
+    font-size: 1.5rem;
+    color: $color-grey;
+  }
 }
 

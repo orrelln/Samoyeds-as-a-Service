@@ -5,7 +5,7 @@
 
   @include for-size(under-desktop){
     margin-top: initial;
-    padding: 4rem 4vw 4rem;
+    padding: 8rem 4vw 4rem;
   }
 }
 
@@ -18,16 +18,7 @@ h1 {
 }
 
 .try {
-  padding: 25rem 26.5vw;
-  @include for-size(under-med-desktop){
-    padding: 25rem 22.5vw;
-  }
-  @include for-size(under-desktop){
-    padding: 25rem 12.5vw;
-  }
-  @include for-size(under-tablet-ls) {
-     padding: 25rem 7.5vw;
-  }
+  padding: 25rem 0;
   text-align: center;
   margin-top: -20vh;
   min-height: 120vh;
@@ -40,22 +31,7 @@ h1 {
   url("../assets/field.jpg") no-repeat center center;
   background-size: cover;
 
-  &__req {
-    &__url {
-      text-align: left;
-      margin: auto 0;
-    }
-    &__domain {
-      text-align: left;
-      margin: auto 0;
-    }
-    &__upload {
-      margin: 0;
-
-      &__btn {
-        height: 100%;
-      }
-    }
+  &__title {
   }
 
   &__img {

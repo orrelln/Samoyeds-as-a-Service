@@ -1,7 +1,7 @@
 const primary = $('.try__req__url__path1');
 const secondary = $('.try__req__url__path2');
 const slash = $('.try__req__url__slash');
-const domain = $('.try__req__domain');
+const domain = $('.try__req__url__domain');
 const upload = $('.try__req__upload');
 
 const goBtn = $('.try__req__go');
@@ -25,18 +25,16 @@ mthdBtn.click(() => {
         primary.removeClass('u-remove');
         secondary.removeClass('u-remove');
         slash.removeClass('u-remove');
-        upload.addClass('u-hidden');
+        upload.addClass('u-shrink');
         domain.text('https://samoyeds.cc/');
-        //$('.try__req').css( "grid-template-columns", "1fr 2fr 6fr 0 1fr");
 
     } else {
-        upload.removeClass('u-hidden');
+        upload.removeClass('u-shrink');
         mthdBtn.text('POST');
         primary.addClass('u-remove');
         secondary.addClass('u-remove');
         slash.addClass('u-remove');
         domain.text('https://samoyeds.cc/upload');
-        //$('.try__req').css( "grid-template-columns", "1fr 2fr 0 4fr 1fr");
     }
 });
 

@@ -1,0 +1,31 @@
+.footer {
+  padding: 10vh 0;
+  background-color: $color-black-light;
+  color: white;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    padding: 0 22vw 4rem;
+
+    a {
+      flex-grow: 1;
+      text-align: center;
+
+      &:hover {
+        color: $color-tertiary;
+      }
+
+    }
+  }
+
+  &__about {
+    text-align: center;
+    padding: 0 24vw;
+  }
+}

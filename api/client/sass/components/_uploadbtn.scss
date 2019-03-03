@@ -4,13 +4,14 @@
   display: inline-block;
 
   &__btn {
+    font-size: 1.6rem;
     float: left;
-    width: 50%;
     border: 1px solid gray;
     color: gray;
     background-color: transparent;
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 1rem 2rem;
     border-radius: 4px;
+    width: 14rem;
   }
 
   input[type=file] {
