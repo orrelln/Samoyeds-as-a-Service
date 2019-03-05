@@ -31,28 +31,33 @@ h1 {
   url("../assets/field.jpg") no-repeat center center;
   background-size: cover;
 
-  &__title {
-  }
-
-  &__img {
+  &__content {
+    width: 75rem;
     margin: auto;
-    height: 40vh;
 
-    img {
-      max-height: 100%;
-      max-width: 100%;
+    &__title {
     }
-  }
 
-  &__json {
-    padding-top: 5rem;
-    text-align: left;
-  }
+    &__img {
+      margin: auto;
+      height: 40vh;
 
-  @include for-size(under-desktop){
-    clip-path: initial;
-    margin-top: initial;
-    padding-top: 4rem;
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+
+    &__json {
+      padding-top: 5rem;
+      text-align: left;
+    }
+
+    @include for-size(under-desktop) {
+      clip-path: initial;
+      margin-top: initial;
+      padding-top: 4rem;
+    }
   }
 
 }

@@ -1,34 +1,29 @@
-.try__req {
-  max-width: 50%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: left;
-  align-items: center;
+.try__content {
+    @include for-size(under-desktop) {
+      max-width: 90vw;
+    }
 
-  @include for-size(under-desktop) {
-    max-width: 70%;
-  }
 
-  @include for-size(under-tablet-ls) {
-    max-width: 90%;
-  }
+  &__req {
+    margin: 0 auto;
+    display: flex;
+    justify-content: left;
+    align-items: center;
 
-  @include for-size(under-tablet-p) {
-    max-width: 95%;
-  }
 
-  &__method {
-    max-width: 10rem;
-    margin-right: 2rem;
-  }
-  &__url {
-  }
-  &__upload {
-    margin-left: auto;
-  }
-  &__go {
-    max-width: 10rem;
-    flex-shrink: 3;
-    margin-left: 4rem;
+    &__method {
+      max-width: 10rem;
+      margin-right: 2rem;
+    }
+    &__url {
+    }
+    &__upload {
+      margin-left: auto;
+    }
+    &__go {
+      max-width: 10rem;
+      flex-shrink: 3;
+      margin-left: 4rem;
+    }
   }
 }

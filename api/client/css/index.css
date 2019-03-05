@@ -218,11 +218,11 @@ select {
     .payload {
       max-width: 95%; } }
 
-.try__req__upload {
+.try__content__req__upload {
   position: relative;
   overflow: hidden;
   display: inline-block; }
-  .try__req__upload__btn {
+  .try__content__req__upload__btn {
     font-size: 1.6rem;
     float: left;
     border: 1px solid gray;
@@ -231,7 +231,7 @@ select {
     padding: 1rem 2rem;
     border-radius: 4px;
     width: 14rem; }
-  .try__req__upload input[type=file] {
+  .try__content__req__upload input[type=file] {
     font-size: 100px;
     position: absolute;
     left: 0;
@@ -240,27 +240,21 @@ select {
     margin: 0;
     padding: 0; }
 
-.try__req {
-  max-width: 50%;
+@media (max-width: 1199px) {
+  .try__content {
+    max-width: 90vw; } }
+
+.try__content__req {
   margin: 0 auto;
   display: flex;
   justify-content: left;
   align-items: center; }
-  @media (max-width: 1199px) {
-    .try__req {
-      max-width: 70%; } }
-  @media (max-width: 899px) {
-    .try__req {
-      max-width: 90%; } }
-  @media (max-width: 599px) {
-    .try__req {
-      max-width: 95%; } }
-  .try__req__method {
+  .try__content__req__method {
     max-width: 10rem;
     margin-right: 2rem; }
-  .try__req__upload {
+  .try__content__req__upload {
     margin-left: auto; }
-  .try__req__go {
+  .try__content__req__go {
     max-width: 10rem;
     flex-shrink: 3;
     margin-left: 4rem; }
@@ -327,17 +321,20 @@ h1 {
   position: relative;
   background: linear-gradient(to right bottom, rgba(255, 247, 215, 0.8), rgba(178, 155, 63, 0.8)), url("../assets/field.jpg") no-repeat center center;
   background-size: cover; }
-  .try__img {
-    margin: auto;
-    height: 40vh; }
-    .try__img img {
-      max-height: 100%;
-      max-width: 100%; }
-  .try__json {
-    padding-top: 5rem;
-    text-align: left; }
-  @media (max-width: 1199px) {
-    .try {
-      clip-path: initial;
-      margin-top: initial;
-      padding-top: 4rem; } }
+  .try__content {
+    width: 75rem;
+    margin: auto; }
+    .try__content__img {
+      margin: auto;
+      height: 40vh; }
+      .try__content__img img {
+        max-height: 100%;
+        max-width: 100%; }
+    .try__content__json {
+      padding-top: 5rem;
+      text-align: left; }
+    @media (max-width: 1199px) {
+      .try__content {
+        clip-path: initial;
+        margin-top: initial;
+        padding-top: 4rem; } }
