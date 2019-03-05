@@ -195,10 +195,11 @@ select {
 
 .payload {
   display: block;
+  max-width: 50%;
   white-space: pre;
   font-family: monospace;
   padding: 9.5px;
-  margin: 0 0 10px;
+  margin: 0 auto;
   font-size: 2rem;
   line-height: 1.42857143;
   color: #333;
@@ -207,6 +208,15 @@ select {
   background-color: rgba(247, 247, 247, 0.95);
   border-radius: 5px;
   overflow: scroll; }
+  @media (max-width: 1199px) {
+    .payload {
+      max-width: 70%; } }
+  @media (max-width: 899px) {
+    .payload {
+      max-width: 90%; } }
+  @media (max-width: 599px) {
+    .payload {
+      max-width: 95%; } }
 
 .try__req__upload {
   position: relative;

@@ -15,6 +15,7 @@ function stringify(text) {
 }
 
 populateOptions();
+
 primary.change(() => {
     populateOptions();
 });
@@ -40,10 +41,11 @@ mthdBtn.click(() => {
 
 goBtn.click(() => {
     if (mthdBtn.text().trim() === 'GET') {
+
         let method = $('.try__req__method').text().trim();
-        console.log(method);
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
         let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
+
         $.ajax({
             type: method,
             url: `/${primaryOption}/${secondaryOption}`,
@@ -60,12 +62,14 @@ goBtn.click(() => {
                 $('.payload').text('Error requesting image, check console for details.')
             }
         });
-    } else {
-        if (uploadReader.result) {
+    }
+    else if(uploadReader.result) {
+
             let fd = new FormData();
             fd.append('photo', file, file.name);
             console.log(uploadReader);
             let url;
+
             $.ajax({
                 type: 'POST',
                 url: '/upload',
@@ -76,7 +80,6 @@ goBtn.click(() => {
                 success: (res) => {
                     console.log("Success!");
                     url = res.message.link;
-                    //$('.res_image').attr('src', `http://${res.message[0]}`).removeClass('u-hidden');
                     $('.payload').text(stringify(res)).removeClass('u-hidden');
                     setTimeout(function () {ajaxRepeat(url);}, 500);
 
@@ -86,9 +89,10 @@ goBtn.click(() => {
                     $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
                 }
             });
-        }
+
         file = null;
     }
+
 });
 
 

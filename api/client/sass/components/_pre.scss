@@ -1,9 +1,10 @@
 .payload {
   display: block;
+  max-width: 50%;
   white-space: pre;
   font-family: monospace;
   padding: 9.5px;
-  margin: 0 0 10px;
+  margin: 0 auto;
   font-size: 2rem;
   line-height: 1.42857143;
   color: #333;
@@ -12,4 +13,16 @@
   background-color: transparentize($color-grey-light, 0.05);
   border-radius: 5px;
   overflow: scroll;
+
+  @include for-size(under-desktop) {
+    max-width: 70%;
+  }
+
+  @include for-size(under-tablet-ls) {
+    max-width: 90%;
+  }
+
+  @include for-size(under-tablet-p) {
+    max-width: 95%;
+  }
 }
