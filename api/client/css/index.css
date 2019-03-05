@@ -310,7 +310,7 @@ select {
   @media (max-width: 1199px) {
     .about {
       margin-top: initial;
-      padding: 8rem 4vw 4rem; } }
+      padding: 16rem 4vw; } }
 
 h1 {
   padding-bottom: 3rem; }
