@@ -1,4 +1,4 @@
-.try__content__req__upload {
+.try__req__upload {
   position: relative;
   overflow: hidden;
   display: inline-block;
@@ -12,6 +12,14 @@
     padding: 1rem 2rem;
     border-radius: 4px;
     width: 14rem;
+
+    @include for-size(under-tablet-p) {
+      padding: .45rem .33rem;
+      width: initial;
+      font-size: 1rem;
+    }
+
+
   }
 
   input[type=file] {

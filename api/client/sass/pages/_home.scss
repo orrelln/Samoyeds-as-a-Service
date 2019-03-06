@@ -5,8 +5,9 @@
 
   @include for-size(under-desktop){
     margin-top: initial;
-    padding: 16rem 4vw;
+    padding: 8rem 4vw 16rem;
   }
+
 }
 
 h1 {
@@ -31,33 +32,25 @@ h1 {
   url("../assets/field.jpg") no-repeat center center;
   background-size: cover;
 
-  &__content {
-    width: 75rem;
+  &__img {
     margin: auto;
+    height: 40vh;
 
-    &__title {
+    img {
+      max-height: 100%;
+      max-width: 100%;
     }
+  }
 
-    &__img {
-      margin: auto;
-      height: 40vh;
+  &__json {
+    padding-top: 5rem;
+    text-align: left;
+  }
 
-      img {
-        max-height: 100%;
-        max-width: 100%;
-      }
-    }
-
-    &__json {
-      padding-top: 5rem;
-      text-align: left;
-    }
-
-    @include for-size(under-desktop) {
-      clip-path: initial;
-      margin-top: initial;
-      padding-top: 4rem;
-    }
+  @include for-size(under-desktop) {
+    clip-path: initial;
+    margin-top: initial;
+    padding-top: 4rem;
   }
 
 }

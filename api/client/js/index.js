@@ -1,11 +1,11 @@
-const primary = $('.try__content__req__url__path1');
-const secondary = $('.try__content__req__url__path2');
-const slash = $('.try__content__req__url__slash');
-const domain = $('.try__content__req__url__domain');
-const upload = $('.try__content__req__upload');
+const primary = $('.try__req__url__path1');
+const secondary = $('.try__req__url__path2');
+const slash = $('.try__req__url__slash');
+const domain = $('.try__req__url__domain');
+const upload = $('.try__req__upload');
 
-const goBtn = $('.try__content__req__go');
-const mthdBtn = $('.try__content__req__method');
+const goBtn = $('.try__req__go');
+const mthdBtn = $('.try__req__method');
 
 const uploadReader = new FileReader();
 let file;
@@ -42,9 +42,9 @@ mthdBtn.click(() => {
 goBtn.click(() => {
     if (mthdBtn.text().trim() === 'GET') {
 
-        let method = $('.try__content__req__method').text().trim();
-        let primaryOption = `${$(".try__content__req__url__path1 option:selected").text()}`;
-        let secondaryOption = `${$(".try__content__req__url__path2 option:selected").text()}`;
+        let method = mthdBtn.text().trim();
+        let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
+        let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
 
         $.ajax({
             type: method,
@@ -182,6 +182,6 @@ function readURL(input) {
     }
 }
 
-$(".try__content__req__upload__file").change(function(){
+$(".try__req__upload__file").change(function(){
     readURL(this);
 });

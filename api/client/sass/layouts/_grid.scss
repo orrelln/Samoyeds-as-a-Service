@@ -1,19 +1,33 @@
-.try__content {
-    @include for-size(under-desktop) {
-      max-width: 90vw;
-    }
-
-
+.try {
   &__req {
+    width: 55%;
     margin: 0 auto;
     display: flex;
     justify-content: left;
     align-items: center;
 
+    @include for-size(under-med-desktop) {
+      width: 65%;
+    }
+    @include for-size(under-desktop) {
+      width: 90%;
+    }
+    @include for-size(under-tablet-ls) {
+
+    }
+    @include for-size(under-tablet-p) {
+
+    }
 
     &__method {
       max-width: 10rem;
       margin-right: 2rem;
+
+      @include for-size(under-tablet-p) {
+        margin-right: .5rem;
+
+      }
+
     }
     &__url {
     }
@@ -22,8 +36,12 @@
     }
     &__go {
       max-width: 10rem;
-      flex-shrink: 3;
       margin-left: 4rem;
+
+      @include for-size(under-tablet-p) {
+        margin-left: .25rem;
+      }
+
     }
   }
 }

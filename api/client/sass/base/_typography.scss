@@ -4,6 +4,13 @@ body {
   line-height: 1.7;
   font-size: 2rem;
   color: $color-grey-dark;
+
+  @include for-size(under-tablet-ls) {
+    font-size: 1.5rem;
+  }
+  @include for-size(under-tablet-p) {
+    font-size: 1rem;
+  }
 }
 
 .heading-primary {
@@ -21,6 +28,15 @@ body {
     animation-name: moveInLeft;
     animation-duration: 1s;
     animation-timing-function: ease-out;
+
+    @include for-size(under-desktop) {
+      font-size: 4.5rem;
+
+    }
+    @include for-size(under-tablet-p) {
+      font-size: 2.25rem;
+    }
+
   }
 
   &--sub {
@@ -29,30 +45,50 @@ body {
     font-weight: 400;
     letter-spacing: .75rem;
     animation: moveInRight 1s ease-out;
+
+    @include for-size(under-desktop) {
+      font-size: 1.5rem;
+      letter-spacing: .5rem;
+    }
+    @include for-size(under-tablet-p) {
+      font-size: .75rem;
+      letter-spacing: .125rem;
+    }
   }
 }
 
-h1 {
+.about__title {
   font-size: 4rem;
   font-weight: 600;
   text-transform: uppercase;
   background-image: linear-gradient(to right, $color-primary, $color-primary-dark);
   -webkit-background-clip: text;
   color: transparent;
+
+  @include for-size(under-desktop) {
+    font-size: 3rem;
+  }
+  @include for-size(under-tablet-p) {
+    font-size: 2rem;
+  }
+
 }
 
 .title {
   font-size: 2rem;
   font-weight: 600;
-  @include for-size(under-tablet-ls) {
-    font-size: 3.5vmin;
+
+  @include for-size(under-tablet-p) {
+    font-size: 1.5rem;
   }
+
 }
 
 .content {
   font-size: 1.5rem;
-  @include for-size(under-tablet-ls) {
-    font-size: 2.5vmin;
+
+  @include for-size(under-tablet-p) {
+    font-size: 1.25rem;
   }
 }
 
@@ -60,9 +96,6 @@ h1 {
   &__title {
     background-image: initial;
     color: $color-white;
-  }
-  &__req__url__upload__btn {
-    font-size: 1.5rem;
   }
 }
 
