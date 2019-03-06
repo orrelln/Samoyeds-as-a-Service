@@ -252,6 +252,9 @@ select {
   @media (max-width: 899px) {
     .payload {
       width: 64rem; } }
+  @media (max-width: 749px) {
+    .payload {
+      width: 50rem; } }
   @media (max-width: 599px) {
     .payload {
       width: 30rem; } }
@@ -292,6 +295,9 @@ select {
   @media (max-width: 899px) {
     .try__req {
       width: 64rem; } }
+  @media (max-width: 749px) {
+    .try__req {
+      width: 50rem; } }
   @media (max-width: 599px) {
     .try__req {
       width: 30rem; } }
