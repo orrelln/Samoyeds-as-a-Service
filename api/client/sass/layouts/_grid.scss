@@ -1,23 +1,11 @@
 .try {
   &__req {
-    width: 55%;
     margin: 0 auto;
     display: flex;
     justify-content: left;
     align-items: center;
 
-    @include for-size(under-med-desktop) {
-      width: 65%;
-    }
-    @include for-size(under-desktop) {
-      width: 90%;
-    }
-    @include for-size(under-tablet-ls) {
-
-    }
-    @include for-size(under-tablet-p) {
-
-    }
+    @include tryit-width;
 
     &__method {
       max-width: 10rem;

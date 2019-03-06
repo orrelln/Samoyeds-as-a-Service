@@ -235,28 +235,26 @@ select {
 
 .payload {
   display: block;
-  max-width: 50%;
   white-space: pre;
   font-family: monospace;
-  padding: 9.5px;
+  padding: .75rem;
   margin: 0 auto;
   font-size: 2rem;
-  line-height: 1.42857143;
+  line-height: 1.4;
   color: #333;
   word-break: break-all;
   word-wrap: break-word;
   background-color: rgba(247, 247, 247, 0.95);
   border-radius: 5px;
-  overflow: scroll; }
-  @media (max-width: 1199px) {
-    .payload {
-      max-width: 70%; } }
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+  width: 80rem; }
   @media (max-width: 899px) {
     .payload {
-      max-width: 90%; } }
+      width: 64rem; } }
   @media (max-width: 599px) {
     .payload {
-      max-width: 95%; } }
+      width: 30rem; } }
 
 .try__req__upload {
   position: relative;
@@ -286,17 +284,17 @@ select {
     padding: 0; }
 
 .try__req {
-  width: 55%;
   margin: 0 auto;
   display: flex;
   justify-content: left;
-  align-items: center; }
-  @media (max-width: 1399px) {
+  align-items: center;
+  width: 80rem; }
+  @media (max-width: 899px) {
     .try__req {
-      width: 65%; } }
-  @media (max-width: 1199px) {
+      width: 64rem; } }
+  @media (max-width: 599px) {
     .try__req {
-      width: 90%; } }
+      width: 30rem; } }
   .try__req__method {
     max-width: 10rem;
     margin-right: 2rem; }

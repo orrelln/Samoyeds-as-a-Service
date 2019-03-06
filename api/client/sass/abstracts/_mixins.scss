@@ -13,3 +13,16 @@
     @media (max-width: 1799px) { @content; }
   }
 }
+
+
+@mixin tryit-width {
+  width: 80rem;
+
+  @include for-size(under-tablet-ls) {
+    width: 64rem;
+  }
+  @include for-size(under-tablet-p) {
+    width: 30rem;
+  }
+
+}
