@@ -77,18 +77,36 @@ async function insertRecord(result) {
 }
 
 // Selects random paths from image_data table
-async function selectRandom(count = 1, safe_mode) {
+async function selectRandom(count = 1, safe_mode = null, robust = null) {
     const client = await pgPool.connect();
+    let safeModeQuery = safe_mode ? 'WHERE safe_mode is true' : '';
+    let queryText;
     let ids = [];
+
+    if (robust) {
+        queryText =
+            `SELECT a.id, breed, percentage FROM (
+                SELECT id FROM images
+                ${safeModeQuery}
+                ORDER BY random()
+                LIMIT $1
+            )a
+            INNER JOIN predictions ON a.id = predictions.id
+            ORDER BY a.id, percentage DESC`;
+    }
+    else {
+        queryText =
+            `SELECT id FROM images
+            ${safeModeQuery}
+            ORDER BY random()
+            LIMIT $1`;
+    }
+
     const query = {
-        text: 'SELECT id\n' +
-            'FROM images\n' +
-            (safe_mode ? 'WHERE safe_mode is true\n' : '') +
-            'ORDER by random()\n' +
-            'LIMIT $1\n' +
-            '\n',
+        text: queryText,
         values: [count]
     };
+
     try {
         const res = await client.query(query);
         res.rows.forEach((obj) => {
@@ -106,10 +124,11 @@ async function selectRandom(count = 1, safe_mode) {
 }
 
 // Selects image path by id from image_data table
-async function selectId(id) {
+async function selectId(id, robust = null) {
     const client = await pgPool.connect();
     const query = {
-        text: 'SELECT id, breed, percentage ' +
+        text:
+            'SELECT id, breed' + (robust ? ', percentage' : '') +
             'FROM predictions ' +
             'WHERE id = $1 ' +
             'ORDER BY percentage DESC ' +
