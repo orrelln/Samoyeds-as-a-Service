@@ -242,13 +242,11 @@ select {
   font-size: 2rem;
   line-height: 1.4;
   color: #333;
-  word-break: break-all;
-  word-wrap: break-word;
   background-color: rgba(247, 247, 247, 0.95);
   border-radius: 5px;
-  -webkit-overflow-scrolling: touch;
   overflow: scroll;
-  width: 80rem; }
+  -webkit-overflow-scrolling: touch;
+  width: 77rem; }
   @media (max-width: 899px) {
     .payload {
       width: 64rem; } }
@@ -291,7 +289,7 @@ select {
   display: flex;
   justify-content: left;
   align-items: center;
-  width: 80rem; }
+  width: 77rem; }
   @media (max-width: 899px) {
     .try__req {
       width: 64rem; } }

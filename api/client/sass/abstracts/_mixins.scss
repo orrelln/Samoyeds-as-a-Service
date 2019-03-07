@@ -24,7 +24,7 @@
 
 
 @mixin tryit-width {
-  width: 80rem;
+  width: 77rem;
 
   @include for-size(under-tablet-ls) {
     width: 64rem;
