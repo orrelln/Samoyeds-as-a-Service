@@ -45,7 +45,6 @@ router.get('/:id', (req, res) => {
 
 function generateStatusMsg(results) {
     let msg;
-    console.log('--------', results[0].queue_number, results[1].queue_number);
     switch (results[0].status) {
         case 'processing':
             msg = {

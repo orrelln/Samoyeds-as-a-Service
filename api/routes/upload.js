@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
                 res.status(202).json({
                     status: 'success',
                     message: {
-                        link: `/processing/${id}`
+                        link: `/status/${id}`
                     }
                 });
             } catch (err) {

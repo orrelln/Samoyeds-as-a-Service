@@ -5,4 +5,4 @@ router.use('/category', require('./category').router);
 router.use(`/id`, require('./id').router);
 router.use('/random', require('./random').router);
 router.use('/upload', require('./upload').router);
-router.use('/processing', require('./processing').router);
+router.use('/status', require('./status').router);
