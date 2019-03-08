@@ -2,7 +2,7 @@ CREATE TABLE images
 (
     id UUID PRIMARY KEY,
     ts TIMESTAMP,
-    safe_mode BOOLEAN DEFAULT TRUE
+    safe_mode BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE predictions

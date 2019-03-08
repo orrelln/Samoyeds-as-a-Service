@@ -37,13 +37,10 @@ async function sqlTransaction(query_array) {
 }
 
 // Inserts a new status
-async function insertStatus(id, approxTime, ip) {
-    let now = new Date();
-    now.setTime(now.getTime() + (approxTime * 1000));
-
+async function insertStatus(id, ip) {
     const query = {
         text: `INSERT INTO statuses(id, status, ts, ip) VALUES($1, $2, $3, $4)`,
-        values: [id, 'processing', now, ip]
+        values: [id, 'processing', new Date(), ip]
     };
 
     await sqlQuery(query);
@@ -64,6 +61,19 @@ async function selectStatus(args) {
     const query = {
         text: `SELECT id, status, queue_number FROM statuses WHERE id = $1`,
         values: [args.id]
+    };
+    const res = await sqlQuery(query);
+    return res.rows[0];
+}
+
+async function selectRecentStatus() {
+    const query = {
+        text:
+            `SELECT queue_number 
+             FROM statuses 
+             WHERE status = 'approved' or status = 'rejected'
+             ORDER BY queue_number 
+             DESC LIMIT 1`
     };
     const res = await sqlQuery(query);
     return res.rows[0];
@@ -157,5 +167,6 @@ module.exports = {
     selectRandom,
     selectId,
     selectStatus,
-    selectBreed
+    selectBreed,
+    selectRecentStatus
 };

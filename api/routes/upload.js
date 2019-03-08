@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const image_handling = require('../utils/image_handling');
 const {assertTaskChannel, putItemOnTaskQueue} = require('../utils/rabbitmq');
-const {getApproxQueueTime, approxTimeToMsg} = require('../utils/approx_queue');
-
 const {insertStatus} = require('../utils/postgres');
 
 router.post('/', (req, res) => {
@@ -18,22 +16,17 @@ router.post('/', (req, res) => {
             const id = req.file.filename.replace(/\.[^/.]+$/, "");
             try {
                 assertTaskChannel();
-                const approxTime = getApproxQueueTime();
-
                 (async () => {
-                    await Promise.all([insertStatus(id, approxTime),
+                    await Promise.all([insertStatus(id, req.ip),
                         putItemOnTaskQueue(id, req.file.path)])
                 })().catch(err => console.log(err.stack));
 
-                res.status(200).json({
+                res.status(202).json({
                     status: 'success',
                     message: {
-                        id: id,
-                        processing_estimation: approxTimeToMsg(approxTime),
-                        link: `/id/${id}`
+                        link: `/processing/${id}`
                     }
                 });
-
             } catch (err) {
                 res.status(500).json({
                     status: 'error',
