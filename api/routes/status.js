@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {selectStatus, selectRecentStatus} = require('../utils/postgres');
 const {approxTimeToMsg} = require('../utils/approx_queue');
-const {sanitize} = require('../utils/sanitation');
+const {parse} = require('../utils/args_parser');
 
 router.get('/:id', (req, res) => {
-    let args = sanitize(req);
+    let args = parse(req);
 
     if(!args.id) {
         res.status(404).json({

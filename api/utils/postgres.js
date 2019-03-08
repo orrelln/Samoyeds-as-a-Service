@@ -159,6 +159,28 @@ async function selectBreed(args) {
     return res.rows;
 }
 
+async function selectRecent(args) {
+    const safeModeQuery = args.safe_mode ? 'WHERE safe_mode is true' : '';
+    let queryText =
+        `SELECT i.id, breed, percentage FROM (
+            SELECT images.id
+            FROM images
+            ${safeModeQuery}
+            ORDER BY ts DESC
+            LIMIT $1 OFFSET $2
+         )i
+         INNER JOIN predictions ON i.id = predictions.id
+         ORDER BY i.id, percentage DESC;`;
+
+    const query = {
+        text: queryText,
+        values: [args.count, args.offset]
+    };
+
+    const res = await sqlQuery(query);
+    return res.rows;
+}
+
 module.exports = {
     pgPool,
     updateStatus,
@@ -168,5 +190,6 @@ module.exports = {
     selectId,
     selectStatus,
     selectBreed,
-    selectRecentStatus
+    selectRecentStatus,
+    selectRecent
 };

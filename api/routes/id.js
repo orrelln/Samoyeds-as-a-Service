@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {selectId} = require('../utils/postgres');
 const {rowsToSimple, rowsToRobust} = require('../utils/express_functions');
-const {sanitize} = require('../utils/sanitation');
+const {parse} = require('../utils/args_parser');
 
 router.get('/:id', (req, res) => {
-    let args = sanitize(req);
+    let args = parse(req);
 
     if(!args.id) {
         res.status(404).json({

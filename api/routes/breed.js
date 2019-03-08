@@ -2,13 +2,13 @@ const router = require('express').Router();
 const {breed} = require('../utils/dogs');
 const {selectBreed} = require('../utils/postgres');
 const {rowsToSimple, rowsToRobust} = require('../utils/express_functions');
-const {sanitize} = require('../utils/sanitation');
+const {parse} = require('../utils/args_parser');
 
 const limit = 10;
 
 router.get('/:breed', (req, res) => {
     (async () => {
-        const args = sanitize(req);
+        const args = parse(req);
         console.log(args);
 
         if (!breed.includes(args.breed)) {

@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {category} = require('../utils/dogs');
-const {sanitize} = require('../utils/sanitation');
+const {parse} = require('../utils/args_parser');
 
 
 router.get(`/:category`, (req, res) => {
-    let args = sanitize(req);
+    let args = parse(req);
 
     if (!category.includes(args.category)) {
         res.status(404).json({
