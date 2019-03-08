@@ -2,198 +2,151 @@ const { Pool } = require('pg');
 const pgFormat = require('pg-format');
 const pgPool = new Pool();
 
-// Updates processing_status row
-async function updateStatus(result) {
+
+async function sqlQuery(query) {
     const client = await pgPool.connect();
-    const query = {
-        text: 'UPDATE processing_status SET status = $1 WHERE id = $2',
-        values: [result.reject ? 'rejected' : 'approved', result.id]
-    };
     try {
-        const res = await client.query(query);
+        return await client.query(query);
     }
-    catch(err) {
+    catch (err) {
         console.log(err.stack);
-        throw new Error(err)
-    } 
+        throw new Error(err);
+    }
+    finally {
+        client.release();
+    }
+}
+
+async function sqlTransaction(query_array) {
+    const client = await pgPool.connect();
+    try {
+        await client.query('BEGIN');
+        query_array.forEach(async (query) => {
+            await client.query(query)
+        });
+        await client.query('COMMIT');
+    }
+    catch (err) {
+        await client.query('ROLLBACK');
+        console.log(err.stack);
+        throw new Error(err);
+    }
     finally {
         client.release();
     }
 }
 
 // Inserts a new status
-async function insertStatus(id, approxTime) {
+async function insertStatus(id, approxTime, ip) {
     let now = new Date();
     now.setTime(now.getTime() + (approxTime * 1000));
 
-    const client = await pgPool.connect();
     const query = {
-        text: 'INSERT INTO processing_status(id, status, time_til_finish) VALUES($1, $2, $3)',
-        values: [id, 'processing', now]
+        text: `INSERT INTO statuses(id, status, ts, ip) VALUES($1, $2, $3, $4)`,
+        values: [id, 'processing', now, ip]
     };
-    try {
-        const res = await client.query(query)
-    }
-    catch(err) {
-        console.log(err.stack);
-        throw new Error(err)
-    }
-    finally {
-        client.release()
-    }
+
+    await sqlQuery(query);
 }
 
-function create_query_array(result){
-    let new_arr = [];
-    result.predictions.forEach((prediction) => {
-        new_arr.push([result.id, prediction[0], prediction[1]])
-    });
-    return new_arr;
+// Updates processing_status row
+async function updateStatus(result) {
+    const query = {
+        text: `UPDATE statuses SET status = $1 WHERE id = $2`,
+        values: [result.reject ? 'rejected' : 'approved', result.id]
+    };
+
+    await sqlQuery(query);
+}
+
+// Selects image path by id from image_data table
+async function selectStatus(args) {
+    const query = {
+        text: `SELECT id, status, queue_number FROM statuses WHERE id = $1`,
+        values: [args.id]
+    };
+    const res = await sqlQuery(query);
+    return res.rows[0];
 }
 
 // Inserts results about image into image_data table
 async function insertRecord(result) {
-    const client = await pgPool.connect();
     const images_query = {
-        text: 'INSERT INTO images(id, ts) VALUES($1, $2)',
+        text: `INSERT INTO images(id, ts) VALUES($1, $2)`,
         values: [result.id, new Date()]
     };
-    const predictions_query = pgFormat('INSERT INTO predictions (id, breed, percentage) VALUES %L',
-        create_query_array(result));
 
-    try {
-        await client.query('BEGIN');
-        await client.query(images_query);
-        await client.query(predictions_query);
-        await client.query('COMMIT');
-    }
-    catch(err) {
-        await client.query('ROLLBACK');
-        throw err
-    }
-    finally {
-        client.release();
-    }
+    let query_array = [];
+    result.predictions.forEach((prediction) => {
+        query_array.push([result.id, prediction[0], prediction[1]])
+    });
+
+    const predictions_query = pgFormat('INSERT INTO predictions (id, breed, percentage) VALUES %L', query_array);
+
+    await sqlTransaction([images_query, predictions_query]);
 }
 
 // Selects random paths from image_data table
-async function selectRandom(count = 1, safe_mode = null, robust = null) {
-    const client = await pgPool.connect();
-    let safeModeQuery = safe_mode ? 'WHERE safe_mode is true' : '';
-    let queryText;
-    let ids = [];
-
-    if (robust) {
-        queryText =
-            `SELECT a.id, breed, percentage FROM (
-                SELECT id FROM images
-                ${safeModeQuery}
-                ORDER BY random()
-                LIMIT $1
-            )a
-            INNER JOIN predictions ON a.id = predictions.id
-            ORDER BY a.id, percentage DESC`;
-    }
-    else {
-        queryText =
-            `SELECT id FROM images
-            ${safeModeQuery}
+async function selectRandom(args) {
+    const safeModeQuery = args.safe_mode ? 'safe_mode is true and' : '';
+    let queryText =
+        `SELECT i.id, breed, percentage FROM (
+            SELECT images.id
+            FROM images INNER JOIN predictions on images.id = predictions.id
+            WHERE ${safeModeQuery} percentage > $1
             ORDER BY random()
-            LIMIT $1`;
-    }
+            LIMIT $2
+         )i
+         INNER JOIN predictions ON i.id = predictions.id
+         ORDER BY i.id, percentage DESC;`;
 
     const query = {
         text: queryText,
-        values: [count]
+        values: [args.percentage, args.count]
     };
 
-    try {
-        const res = await client.query(query);
-        res.rows.forEach((obj) => {
-            ids.push(obj.id);
-        });
-        return ids;
-    }
-    catch(err) {
-        console.log(err.stack);
-        throw new Error(err)
-    }
-    finally {
-        client.release();
-    }
+    const res = await sqlQuery(query);
+    return res.rows;
 }
 
 // Selects image path by id from image_data table
-async function selectId(id, robust = null) {
-    const client = await pgPool.connect();
-    const query = {
-        text:
-            'SELECT id, breed' + (robust ? ', percentage' : '') +
-            'FROM predictions ' +
-            'WHERE id = $1 ' +
-            'ORDER BY percentage DESC ' +
-            'LIMIT 1',
-        values: [id]
-    };
-    try {
-        const res = await client.query(query);
-        return res.rows[0];
-    }
-    catch(err) {
-        console.log(err.stack);
-        throw new Error(err.stack);
-    }
-    finally {
-        client.release();
-    }
-}
+async function selectId(args) {
+    let queryText =
+        `SELECT id, breed, percentage
+         FROM predictions
+         WHERE id = $1
+         ORDER BY percentage DESC`;
 
-// Selects image path by id from image_data table
-async function selectIdProcessing(id) {
-    const client = await pgPool.connect();
     const query = {
-        text: 'SELECT id, status, time_til_finish FROM processing_status WHERE id = $1',
-        values: [id]
+        text: queryText,
+        values: [args.id]
     };
-    try {
-        const res = await client.query(query);
-        return res.rows[0];
-    }
-    catch(err) {
-        console.log(err.stack);
-        throw new Error(err.stack);
-    }
-    finally {
-        client.release();
-    }
+
+    const res = await sqlQuery(query);
+    return res.rows;
 }
 
 // Selects random image path by breed from image_data table
-async function selectBreed(breed, count = 1, safe_mode, threshold) {
-    const client = await pgPool.connect();
-    let ids = [];
+async function selectBreed(args) {
+    const safeModeQuery = args.safe_mode ? 'safe_mode is true and' : '';
+    let queryText =
+        `SELECT i.id, breed, percentage FROM (
+            SELECT images.id
+            FROM images INNER JOIN predictions on images.id = predictions.id
+            WHERE ${safeModeQuery} percentage > $1 and breed = $3
+            ORDER BY random()
+            LIMIT $2
+         )i
+         INNER JOIN predictions ON i.id = predictions.id
+         ORDER BY i.id, percentage DESC;`;
+
     const query = {
-        text: 'SELECT images.id, breed\n' +
-            'FROM images INNER JOIN predictions on images.id=predictions.id\n' +
-            'WHERE '  + (safe_mode ? 'safe_mode is true and ' : '') + 'breed = $1 and percentage > $2\n' +
-            'ORDER BY RANDOM()\n' +
-            'LIMIT $3\n',
-        values: [breed, threshold, count]
+        text: queryText,
+        values: [args.percentage, args.count, args.breed]
     };
-    try {
-        const res = await client.query(query);
-        res.rows.forEach((obj) => {
-            ids.push(obj.id);
-        });
-        return ids;
-    }
-    catch(err) {
-        console.log(err.stack);
-        throw new Error(err.stack);
-    }
-    finally {
-        client.release();
-    }
+
+    const res = await sqlQuery(query);
+    return res.rows;
 }
 
 module.exports = {
@@ -203,6 +156,6 @@ module.exports = {
     insertRecord,
     selectRandom,
     selectId,
-    selectIdProcessing,
+    selectStatus,
     selectBreed
 };

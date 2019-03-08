@@ -19,7 +19,7 @@ CREATE TABLE statuses
     status TEXT,
     ts TIMESTAMP,
     ip INET,
-    queue_number INT
+    queue_number SERIAL
 );
 
 CREATE TABLE categories

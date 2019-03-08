@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const {selectId, selectIdProcessing} = require('../utils/postgres');
+const {selectId, selectStatus} = require('../utils/postgres');
 const {approxTimeToMsg} = require('../utils/approx_queue');
-const {idToImgPath} = require('../utils/express_functions');
-const re = new RegExp('^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89ab][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$');
+const {rowsToSimple, rowsToRobust} = require('../utils/express_functions');
+const {sanitize} = require('../utils/sanitation');
 
 router.get('/:id', (req, res) => {
-    let id = req.params.id;
+    let args = sanitize(req);
 
-    if(!re.test(id)) {
+    if(!args.id) {
         res.status(404).json({
             status: 'error',
             code: '404',
@@ -17,17 +17,14 @@ router.get('/:id', (req, res) => {
     else {
         (async () => {
             try {
-                let result = await selectId(id);
+                let result = await selectId(args);
                 if (result) {
                     res.status(200).json({
                         status: 'success',
-                        message: {
-                            image: idToImgPath(result.id, req),
-                            breed: result.breed,
-                        }
+                        message:  args.robust ? rowsToRobust(result, req) : rowsToSimple(result, req)
                     });
                 } else {
-                    result = await selectIdProcessing(id);
+                    result = await selectStatus(args);
                     if (result) {
                         const msg = _generateStatusMsg(result);
                         res.status(200).json({
