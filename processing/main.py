@@ -18,25 +18,28 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 IMAGE_SIZE = 224
 MODE = os.getenv('MODE', 'local2')
 
+preload_image = convert('samoyed.jpg', IMAGE_SIZE)
+preload_image = np.array(preload_image)
+
 if MODE == 'production':
     print('===  Production')
-    NETWORKS = [('seresnet50', IMAGE_SIZE),
-                ('densenet169', IMAGE_SIZE),
-                ('resnet34', IMAGE_SIZE)]
+    NETWORKS = [('seresnet50', IMAGE_SIZE, preload_image),
+                ('densenet169', IMAGE_SIZE, preload_image),
+                ('resnet34', IMAGE_SIZE, preload_image)]
     HOST = 'rabbitmq-server'
 elif MODE == 'testing':
     print('===  Testing')
-    NETWORKS = [('mobilenet', IMAGE_SIZE)]
+    NETWORKS = [('mobilenet', IMAGE_SIZE, preload_image)]
     HOST = 'rabbitmq-server'
 elif MODE == 'local1':
     print('===  Local1')
-    NETWORKS = [('mobilenet', IMAGE_SIZE)]
+    NETWORKS = [('mobilenet', IMAGE_SIZE, preload_image)]
     HOST = '127.0.0.1'
 else:
     print('===  Local2')
-    NETWORKS = [('seresnet50', IMAGE_SIZE),
-                ('densenet169', IMAGE_SIZE),
-                ('resnet34', IMAGE_SIZE)]
+    NETWORKS = [('seresnet50', IMAGE_SIZE, preload_image),
+                ('densenet169', IMAGE_SIZE, preload_image),
+                ('resnet34', IMAGE_SIZE, preload_image)]
     HOST = '127.0.0.1'
 
 

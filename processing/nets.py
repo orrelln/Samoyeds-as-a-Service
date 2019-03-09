@@ -4,11 +4,14 @@ import numpy as np
 
 
 class ImageNetNetwork:
-    def __init__(self, name: str, size: int):
+    def __init__(self, name: str, size: int, preload_image: np.ndarray = None):
         classifier, preprocess_input = Classifiers.get(name)
         self.model = classifier((size, size, 3), weights='imagenet')
         self.preprocess_input = preprocess_input
         self.size = size
+
+        if isinstance(preload_image, np.ndarray):
+            self.classify(preload_image)
 
     def classify(self, image: np.ndarray):
         image = self.preprocess_input(image)
