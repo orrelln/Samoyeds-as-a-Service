@@ -8,6 +8,13 @@ const app = express();
 const port = process.env.PORT || 8000;
 const mode = process.env.MODE || 'local';
 
+// Enable CORS
+app.use((req,res,next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // Utilize body-parser middleware to easily handle JSON
 app.use(bodyParser.json({limit: '2mb'}));
 
