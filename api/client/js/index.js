@@ -42,53 +42,18 @@ mthdBtn.click(() => {
 goBtn.click(() => {
     if (mthdBtn.text().trim() === 'GET') {
 
-        let method = mthdBtn.text().trim();
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
         let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
 
-        $.ajax({
-            type: method,
-            url: `/${primaryOption}/${secondaryOption}`,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: (res) => {
-                console.log("Success!");
-                let render = stringify(res);
-                $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
-                render = render.replace(`"${res.message[0]}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0]}</span>"` );
-                $('.payload').html(render).removeClass('u-hidden');
-            },
-            error: (err) => {
-                console.log(`Error: ${stringify(err)}`);
-                $('.payload').text('Error requesting image, check console for details.')
-            }
-        });
+        getImage(primaryOption, secondaryOption);
+
     }
     else if(uploadReader.result) {
 
-            let fd = new FormData();
-            fd.append('photo', file, file.name);
-            console.log(uploadReader);
-            let url;
+        let fd = new FormData();
+        fd.append('photo', file, file.name);
 
-            $.ajax({
-                type: 'POST',
-                url: '/upload',
-                processData: false,
-                dataType: 'json',
-                data: fd,
-                contentType: false,
-                success: (res) => {
-                    console.log("Success!");
-                    url = res.message.link;
-                    $('.payload').text(stringify(res)).removeClass('u-hidden');
-                    setTimeout(function () {ajaxRepeat(url);}, 500);
-
-                },
-                error: (err) => {
-                    console.log(`Error: ${stringify(err)}`);
-                    $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
-                }
-            });
+        postImage(fd);
 
         file = null;
     }
@@ -116,25 +81,6 @@ function populateOptions() {
             secondary.addClass('u-hidden');
         }
     }
-}
-
-function ajaxRepeat(url) {
-    $.ajax({
-        type: 'GET',
-        url: url,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        success: (res) => {
-            $('.payload').text(stringify(res)).removeClass('u-hidden');
-            if (res.message.processing_status === 'processing' ||
-                res.message.processing_status === 'approved') {
-                setTimeout(function () {ajaxRepeat(url);}, 500);
-            }
-        },
-        error: (err) => {
-            console.log(`Error: ${stringify(err)}`);
-            $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
-        }
-    });
 }
 
 function copy_into_clipboard() {
@@ -185,3 +131,70 @@ function readURL(input) {
 $(".try__req__upload__file").change(function(){
     readURL(this);
 });
+
+
+function getStatus(url) {
+     $.ajax({
+        type: 'GET',
+        url: url,
+        success: (res) => {
+            let status = res.message.processing_status;
+            console.log('processing...');
+            if(status==='processing') {
+                setTimeout(getStatus(url), 700);
+            }
+            else if(status==='rejected') {
+                $('.payload').html(render).removeClass('u-hidden');
+            }
+            else {
+                getImage('id', res.message.id)
+            }
+
+        },
+        error: (err) => {
+            console.log(`Error: ${stringify(err)}`);
+            $('.payload').text('Error requesting status, check console for details.').removeClass('u-hidden');
+        }
+    });
+}
+
+
+function getImage(primaryOption, secondaryOption) {
+     $.ajax({
+        type: 'GET',
+        url: `/${primaryOption}/${secondaryOption}`,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        success: (res) => {
+            let render = stringify(res);
+            $('.res_image').attr('src', `${res.message[0]}`).removeClass('u-hidden');
+            render = render.replace(`"${res.message[0]}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0]}</span>"` );
+            $('.payload').html(render).removeClass('u-hidden');
+        },
+        error: (err) => {
+            console.log(`Error: ${stringify(err)}`);
+            $('.payload').text('Error requesting image, check console for details.');
+        }
+    });
+}
+
+function postImage(fd) {
+    $.ajax({
+        type: 'POST',
+        url: '/upload',
+        processData: false,
+        dataType: 'json',
+        data: fd,
+        contentType: false,
+        success: (res) => {
+            console.log('Success!');
+            let render = stringify(res);
+            render = render.replace(`"${res.message[0]}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0]}</span>"` );
+            $('.payload').html(render).removeClass('u-hidden');
+            getStatus(res.message.link);
+        },
+        error: (err) => {
+            console.log(`Error: ${stringify(err)}`);
+            $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
+        }
+    });
+}
