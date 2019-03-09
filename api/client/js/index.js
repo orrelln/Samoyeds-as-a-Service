@@ -188,7 +188,6 @@ function postImage(fd) {
         success: (res) => {
             console.log('Success!');
             let render = stringify(res);
-            render = render.replace(`"${res.message[0].link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"` );
             $('.payload').html(render).removeClass('u-hidden');
             getStatus(res.message[0].link);
         },
