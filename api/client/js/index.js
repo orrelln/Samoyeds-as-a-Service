@@ -166,8 +166,8 @@ function getImage(primaryOption, secondaryOption) {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             let render = stringify(res);
-            $('.res_image').attr('src', `${res.message.link}`).removeClass('u-hidden');
-            render = render.replace(`"${res.message.link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message.link}</span>"` );
+            $('.res_image').attr('src', `${res.message[0].link}`).removeClass('u-hidden');
+            render = render.replace(`"${res.message[0].link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"` );
             $('.payload').html(render).removeClass('u-hidden');
         },
         error: (err) => {
@@ -188,9 +188,9 @@ function postImage(fd) {
         success: (res) => {
             console.log('Success!');
             let render = stringify(res);
-            render = render.replace(`"${res.message.link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message.link}</span>"` );
+            render = render.replace(`"${res.message[0].link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"` );
             $('.payload').html(render).removeClass('u-hidden');
-            getStatus(res.message.link);
+            getStatus(res.message[0].link);
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
