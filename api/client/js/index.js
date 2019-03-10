@@ -189,7 +189,7 @@ function postImage(fd) {
             console.log('Success!');
             let render = stringify(res);
             $('.payload').html(render).removeClass('u-hidden');
-            getStatus(res.message[0].link);
+            getStatus(res.message.link);
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
