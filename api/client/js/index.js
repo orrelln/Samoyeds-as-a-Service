@@ -144,6 +144,7 @@ function getStatus(url) {
                 setTimeout(getStatus(url), 700);
             }
             else if(status==='rejected') {
+                let render = stringify(res);
                 $('.payload').html(render).removeClass('u-hidden');
             }
             else {

@@ -1,11 +1,7 @@
 .payload {
   display: block;
   white-space: pre;
-  font-family: monospace;
   padding: .75rem;
-  margin: 0 auto;
-  font-size: 2rem;
-  line-height: 1.4;
   color: #333;
   background-color: transparentize($color-grey-light, 0.05);
   border-radius: 5px;

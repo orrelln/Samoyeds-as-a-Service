@@ -33,11 +33,9 @@ h1 {
   background-size: cover;
 
   &__img {
-    margin: auto;
-    height: 40vh;
+    @include tryit-width;
 
     img {
-      max-height: 100%;
       max-width: 100%;
     }
   }

@@ -89,6 +89,14 @@ body {
   background-image: initial;
   color: #FFF; }
 
+.payload {
+  font-family: monospace;
+  line-height: 1.4;
+  font-size: 2rem; }
+  @media (max-width: 599px) {
+    .payload {
+      font-size: 1.5rem; } }
+
 .footer__about {
   font-size: 1.5rem;
   color: #C7C7C7; }
@@ -236,16 +244,13 @@ select {
 .payload {
   display: block;
   white-space: pre;
-  font-family: monospace;
   padding: .75rem;
-  margin: 0 auto;
-  font-size: 2rem;
-  line-height: 1.4;
   color: #333;
   background-color: rgba(247, 247, 247, 0.95);
   border-radius: 5px;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+  margin: 0 auto;
   width: 77rem; }
   @media (max-width: 899px) {
     .payload {
@@ -285,10 +290,10 @@ select {
     padding: 0; }
 
 .try__req {
-  margin: 0 auto;
   display: flex;
   justify-content: left;
   align-items: center;
+  margin: 0 auto;
   width: 77rem; }
   @media (max-width: 899px) {
     .try__req {
@@ -378,10 +383,18 @@ h1 {
   background: linear-gradient(to right bottom, rgba(255, 247, 215, 0.8), rgba(178, 155, 63, 0.8)), url("../assets/field.jpg") no-repeat center center;
   background-size: cover; }
   .try__img {
-    margin: auto;
-    height: 40vh; }
+    margin: 0 auto;
+    width: 77rem; }
+    @media (max-width: 899px) {
+      .try__img {
+        width: 64rem; } }
+    @media (max-width: 749px) {
+      .try__img {
+        width: 50rem; } }
+    @media (max-width: 599px) {
+      .try__img {
+        width: 30rem; } }
     .try__img img {
-      max-height: 100%;
       max-width: 100%; }
   .try__json {
     padding-top: 5rem;
