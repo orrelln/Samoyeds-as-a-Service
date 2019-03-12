@@ -4,6 +4,9 @@ const slash = $('.try__req__url__slash');
 const domain = $('.try__req__url__domain');
 const upload = $('.try__req__upload');
 
+const imgContainer = $('.try__img');
+const jsonContainer = $('.try__json');
+
 const goBtn = $('.try__req__go');
 const mthdBtn = $('.try__req__method');
 
@@ -21,6 +24,11 @@ primary.change(() => {
 });
 
 mthdBtn.click(() => {
+    $('.res_image').attr('src', '');
+    imgContainer.addClass('u-hidden');
+    $('.payload').text('');
+    jsonContainer.addClass('u-hidden');
+
     if (mthdBtn.text().trim() !== 'GET') {
         mthdBtn.text('GET');
         primary.removeClass('u-remove');
@@ -28,14 +36,16 @@ mthdBtn.click(() => {
         slash.removeClass('u-remove');
         upload.addClass('u-shrink');
         domain.text('https://samoyeds.cc/');
-
-    } else {
-        upload.removeClass('u-shrink');
+        goBtn.removeClass('btn--disabled');
+    }
+    else {
         mthdBtn.text('POST');
         primary.addClass('u-remove');
         secondary.addClass('u-remove');
         slash.addClass('u-remove');
+        upload.removeClass('u-shrink');
         domain.text('https://samoyeds.cc/upload');
+        goBtn.addClass('btn--disabled');
     }
 });
 
@@ -54,7 +64,7 @@ goBtn.click(() => {
         fd.append('photo', file, file.name);
 
         postImage(fd);
-
+        goBtn.addClass('btn--disabled');
         file = null;
     }
 
@@ -118,7 +128,9 @@ function copy_into_clipboard() {
 }
 
 uploadReader.onload = function (e) {
-    $('.res_image').attr('src', e.target.result).removeClass('u-hidden');
+    $('.res_image').attr('src', e.target.result);
+    imgContainer.removeClass('u-hidden');
+    goBtn.removeClass('btn--disabled');
 };
 
 function readURL(input) {
@@ -130,22 +142,23 @@ function readURL(input) {
 
 $(".try__req__upload__file").change(function(){
     readURL(this);
+    imgContainer.removeClass('u-hidden');
 });
 
 
 function getStatus(url) {
      $.ajax({
         type: 'GET',
-        url: url,
+        url: 'http://samoyeds-qa.cc' + url,
         success: (res) => {
             let status = res.message.processing_status;
-            console.log('processing...');
             if(status==='processing') {
                 setTimeout(getStatus(url), 700);
             }
             else if(status==='rejected') {
                 let render = stringify(res);
-                $('.payload').html(render).removeClass('u-hidden');
+                $('.payload').html(render);
+                jsonContainer.removeClass('u-hidden');
             }
             else {
                 getImage('id', res.message.id)
@@ -154,7 +167,8 @@ function getStatus(url) {
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
-            $('.payload').text('Error requesting status, check console for details.').removeClass('u-hidden');
+            $('.payload').text('Error requesting status, check console for details.');
+            jsonContainer.removeClass('u-hidden');
         }
     });
 }
@@ -163,13 +177,15 @@ function getStatus(url) {
 function getImage(primaryOption, secondaryOption) {
      $.ajax({
         type: 'GET',
-        url: `/${primaryOption}/${secondaryOption}`,
+        url: `http://samoyeds-qa.cc/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             let render = stringify(res);
-            $('.res_image').attr('src', `${res.message[0].link}`).removeClass('u-hidden');
+            $('.res_image').attr('src', `${res.message[0].link}`);
+            imgContainer.removeClass('u-hidden');
             render = render.replace(`"${res.message[0].link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"` );
-            $('.payload').html(render).removeClass('u-hidden');
+            $('.payload').html(render);
+            jsonContainer.removeClass('u-hidden');
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
@@ -181,15 +197,15 @@ function getImage(primaryOption, secondaryOption) {
 function postImage(fd) {
     $.ajax({
         type: 'POST',
-        url: '/upload',
+        url: 'http://samoyeds-qa.cc/upload',
         processData: false,
         dataType: 'json',
         data: fd,
         contentType: false,
         success: (res) => {
-            console.log('Success!');
             let render = stringify(res);
-            $('.payload').html(render).removeClass('u-hidden');
+            $('.payload').html(render);
+            jsonContainer.removeClass('u-hidden');
             getStatus(res.message.link);
         },
         error: (err) => {

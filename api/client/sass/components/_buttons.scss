@@ -109,4 +109,9 @@
     }
   }
 
+  &--disabled {
+    color: gray;
+    border: 1px solid gray;
+    pointer-events: none;
+  }
 }
