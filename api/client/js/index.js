@@ -5,6 +5,7 @@ const domain = $('.try__req__url__domain');
 const upload = $('.try__req__upload');
 
 const imgContainer = $('.try__img');
+const loader = $('.bouncing-loader');
 const jsonContainer = $('.try__json');
 
 const goBtn = $('.try__req__go');
@@ -25,9 +26,9 @@ primary.change(() => {
 
 mthdBtn.click(() => {
     $('.res_image').attr('src', '');
-    imgContainer.addClass('u-hidden');
+    imgContainer.addClass('u-remove');
     $('.payload').text('');
-    jsonContainer.addClass('u-hidden');
+    jsonContainer.addClass('u-remove');
 
     if (mthdBtn.text().trim() !== 'GET') {
         mthdBtn.text('GET');
@@ -54,7 +55,7 @@ goBtn.click(() => {
 
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
         let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
-
+        loader.removeClass('u-remove');
         getImage(primaryOption, secondaryOption);
 
     }
@@ -63,8 +64,11 @@ goBtn.click(() => {
         let fd = new FormData();
         fd.append('photo', file, file.name);
 
-        postImage(fd);
+        loader.removeClass('u-remove');
+        imgContainer.addClass('u-remove');
         goBtn.addClass('btn--disabled');
+
+        postImage(fd);
         file = null;
     }
 
@@ -129,7 +133,7 @@ function copy_into_clipboard() {
 
 uploadReader.onload = function (e) {
     $('.res_image').attr('src', e.target.result);
-    imgContainer.removeClass('u-hidden');
+    imgContainer.removeClass('u-remove');
     goBtn.removeClass('btn--disabled');
 };
 
@@ -142,33 +146,36 @@ function readURL(input) {
 
 $(".try__req__upload__file").change(function(){
     readURL(this);
-    imgContainer.removeClass('u-hidden');
+    imgContainer.removeClass('u-remove');
+    jsonContainer.addClass('u-remove');
 });
 
 
 function getStatus(url) {
      $.ajax({
         type: 'GET',
-        url: url,
+        url: 'http://samoyeds-qa.cc' + url,
         success: (res) => {
             let status = res.message.processing_status;
             if(status==='processing') {
-                setTimeout(getStatus(url), 700);
+                setTimeout(getStatus(url), 1000);
             }
             else if(status==='rejected') {
+                loader.addClass('u-remove');
                 let render = stringify(res);
                 $('.payload').html(render);
-                jsonContainer.removeClass('u-hidden');
+                jsonContainer.removeClass('u-remove');
             }
             else {
-                getImage('id', res.message.id)
+                getImage('id', res.message.id);
+                loader.addClass('u-remove');
             }
 
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
             $('.payload').text('Error requesting status, check console for details.');
-            jsonContainer.removeClass('u-hidden');
+            jsonContainer.removeClass('u-remove');
         }
     });
 }
@@ -177,15 +184,15 @@ function getStatus(url) {
 function getImage(primaryOption, secondaryOption) {
      $.ajax({
         type: 'GET',
-        url: `/${primaryOption}/${secondaryOption}`,
+        url: `http://samoyeds-qa.cc/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             let render = stringify(res);
             $('.res_image').attr('src', `${res.message[0].link}`);
-            imgContainer.removeClass('u-hidden');
+            imgContainer.removeClass('u-remove');
             render = render.replace(`"${res.message[0].link}"`, `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"` );
             $('.payload').html(render);
-            jsonContainer.removeClass('u-hidden');
+            jsonContainer.removeClass('u-remove');
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
@@ -197,7 +204,7 @@ function getImage(primaryOption, secondaryOption) {
 function postImage(fd) {
     $.ajax({
         type: 'POST',
-        url: '/upload',
+        url: 'http://samoyeds-qa.cc/upload',
         processData: false,
         dataType: 'json',
         data: fd,
@@ -205,14 +212,14 @@ function postImage(fd) {
         success: (res) => {
             let render = stringify(res);
             $('.payload').html(render);
-            jsonContainer.removeClass('u-hidden');
+            jsonContainer.removeClass('u-remove');
             getStatus(res.message.link);
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
             let render = stringify(err.responseJSON);
             $('.payload').html(render);
-            jsonContainer.removeClass('u-hidden');
+            jsonContainer.removeClass('u-remove');
         }
     });
 }
