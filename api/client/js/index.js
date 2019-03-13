@@ -210,7 +210,9 @@ function postImage(fd) {
         },
         error: (err) => {
             console.log(`Error: ${stringify(err)}`);
-            $('.payload').text('Error requesting image, check console for details.').removeClass('u-hidden');
+            let render = stringify(err.responseJSON);
+            $('.payload').html(render);
+            jsonContainer.removeClass('u-hidden');
         }
     });
 }

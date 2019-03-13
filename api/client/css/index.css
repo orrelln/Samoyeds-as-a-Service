@@ -397,7 +397,8 @@ h1 {
   background-size: cover; }
   .try__img {
     margin: 0 auto;
-    width: 78rem; }
+    width: 78rem;
+    min-height: 40rem; }
     @media (max-width: 899px) {
       .try__img {
         width: 64rem; } }
@@ -408,8 +409,22 @@ h1 {
       .try__img {
         width: 30rem; } }
     .try__img img {
-      max-width: 100%;
-      max-height: 40rem; }
+      max-height: 33rem; }
+    @media (max-width: 899px) {
+      .try__img {
+        min-height: 30rem; }
+        .try__img img {
+          max-height: 24rem; } }
+    @media (max-width: 749px) {
+      .try__img {
+        min-height: 20rem; }
+        .try__img img {
+          max-height: 20rem; } }
+    @media (max-width: 599px) {
+      .try__img {
+        min-height: 15rem; }
+        .try__img img {
+          max-height: 15rem; } }
   .try__json {
     padding-top: 5rem;
     text-align: left; }
