@@ -154,7 +154,7 @@ $(".try__req__upload__file").change(function(){
 function getStatus(url) {
      $.ajax({
         type: 'GET',
-        url: 'http://samoyeds-qa.cc' + url,
+        url: url,
         success: (res) => {
             let status = res.message.processing_status;
             if(status==='processing') {
@@ -184,7 +184,7 @@ function getStatus(url) {
 function getImage(primaryOption, secondaryOption) {
      $.ajax({
         type: 'GET',
-        url: `http://samoyeds-qa.cc/${primaryOption}/${secondaryOption}`,
+        url: `/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
             let render = stringify(res);
@@ -204,7 +204,7 @@ function getImage(primaryOption, secondaryOption) {
 function postImage(fd) {
     $.ajax({
         type: 'POST',
-        url: 'http://samoyeds-qa.cc/upload',
+        url: '/upload',
         processData: false,
         dataType: 'json',
         data: fd,
