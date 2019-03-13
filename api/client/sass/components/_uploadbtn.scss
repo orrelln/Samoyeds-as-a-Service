@@ -11,7 +11,11 @@
     background-color: transparent;
     padding: 1rem 2rem;
     border-radius: 4px;
-    width: 14rem;
+
+    @include for-size(under-tablet-lg) {
+      font-size: 1.5rem;
+      padding: 1rem 1rem;
+    }
 
     @include for-size(under-tablet-p) {
       padding: .45rem .33rem;
