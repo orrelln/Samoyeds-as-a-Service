@@ -219,6 +219,7 @@ function postImage(fd) {
             console.log(`Error: ${stringify(err)}`);
             let render = stringify(err.responseJSON);
             $('.payload').html(render);
+            loader.addClass('u-remove');
             jsonContainer.removeClass('u-remove');
         }
     });
