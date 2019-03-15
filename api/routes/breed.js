@@ -9,7 +9,6 @@ const limit = 10;
 router.get('/:breed', (req, res) => {
     (async () => {
         const args = parse(req);
-        console.log(args);
 
         if (!breed.includes(args.breed)) {
             res.status(404).json({

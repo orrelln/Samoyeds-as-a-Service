@@ -21,13 +21,12 @@ const breeds = [
 ];
 
 const categories = [
-    'foundation_stock',
+    'foundation_stock_service',
     'herding',
     'hound',
     'non-sporting',
     'sporting',
     'terrier',
     'toy',
-    'working',
-    'misc',
+    'working'
 ];

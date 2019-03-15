@@ -28,7 +28,8 @@ router.get('/', (req,res) => {
                 const imgs = args.robust ? rowsToRobust(result, req) : rowsToSimple(result, req);
 
                 const robust = args.robust ? '&robust=true' : '';
-                const next = `/recent?count=${args.count}&offset=${args.offset+args.count}${robust}`;
+                const safe_mode = args.safe_mode ? '' : '&safe_mode=false';
+                const next = `/recent?count=${args.count}&offset=${args.offset+args.count}${robust}${safe_mode}`;
 
                 res.status(200).json({
                     status: 'success',

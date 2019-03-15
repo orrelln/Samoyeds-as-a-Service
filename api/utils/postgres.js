@@ -163,18 +163,42 @@ async function selectRecent(args) {
     const safeModeQuery = args.safe_mode ? 'WHERE safe_mode is true' : '';
     let queryText =
         `SELECT i.id, breed, percentage FROM (
-            SELECT images.id
+            SELECT images.id, ts
             FROM images
             ${safeModeQuery}
             ORDER BY ts DESC
             LIMIT $1 OFFSET $2
          )i
          INNER JOIN predictions ON i.id = predictions.id
-         ORDER BY i.id, percentage DESC;`;
+         ORDER BY ts DESC, percentage DESC;`;
 
     const query = {
         text: queryText,
         values: [args.count, args.offset]
+    };
+
+    const res = await sqlQuery(query);
+    return res.rows;
+}
+
+async function selectCategory(args) {
+    const safeModeQuery = args.safe_mode ? 'and safe_mode is true' : '';
+    let queryText =
+        `SELECT p2.id, p2.breed, p2.percentage FROM (
+            SELECT p1.id
+            FROM predictions as p1 
+            INNER JOIN categories ON p1.breed = categories.breed
+            INNER JOIN images as i1 ON p1.id = i1.id
+            WHERE categories.category = $1 and p1.percentage > $2 ${safeModeQuery}
+            ORDER BY random()
+            LIMIT $3
+         )r
+         INNER JOIN predictions as p2 ON r.id = p2.id
+         ORDER BY r.id, percentage DESC;`;
+
+    const query = {
+        text: queryText,
+        values: [args.category, args.percentage, args.count]
     };
 
     const res = await sqlQuery(query);
@@ -191,5 +215,6 @@ module.exports = {
     selectStatus,
     selectBreed,
     selectRecentStatus,
-    selectRecent
+    selectRecent,
+    selectCategory
 };
