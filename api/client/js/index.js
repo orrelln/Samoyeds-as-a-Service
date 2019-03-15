@@ -86,11 +86,11 @@ function populateOptions() {
             }
             secondary.val("samoyed");
         }
-        /*else if (primary.val() === 'category') {
+        else if (primary.val() === 'category') {
             for (let category of categories) {
                 secondary.append(`<option value='${category}'>${category}</option>`)
             }
-        }*/
+        }
         else {
             secondary.addClass('u-hidden');
         }

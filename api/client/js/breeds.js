@@ -28,5 +28,6 @@ const categories = [
     'sporting',
     'terrier',
     'toy',
-    'working'
+    'working',
+    'non-identified'
 ];

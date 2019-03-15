@@ -24,6 +24,6 @@ module.exports = {
     ],
 
     category: [
-        'sporting', 'working', 'toy', 'herding', 'foundation_stock', 'hound', 'terrier', 'non-sporting', 'non-identified'
+        'sporting', 'working', 'toy', 'herding', 'foundation_stock_service', 'hound', 'terrier', 'non-sporting', 'non-identified'
     ]
 };
