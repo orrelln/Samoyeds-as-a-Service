@@ -56,7 +56,11 @@ $goBtn.click(() => {
 
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
         let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
+
         $loader.removeClass('u-remove');
+        $jsonContainer.addClass('u-remove');
+        $imgContainer.addClass('u-remove');
+
         getImage(primaryOption, secondaryOption);
 
     }
