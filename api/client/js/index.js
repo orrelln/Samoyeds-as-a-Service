@@ -192,8 +192,9 @@ function getImage(primaryOption, secondaryOption) {
         url: `/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
+            res.message[0].link = res.message[0].link.replace("http://", "")
             let cleanedResponse = stringify(res);
-            $('.res_image').attr('src', `${res.message[0].link}`);
+            $('.res_image').attr('src', `https://${res.message[0].link}`);
             cleanedResponse = cleanedResponse.replace(
                 `"${res.message[0].link}"`,
                 `"<span class='u-copy' onclick="copy_into_clipboard()">${res.message[0].link}</span>"`
