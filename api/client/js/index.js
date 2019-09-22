@@ -5,6 +5,7 @@ const $domain = $('.try__req__url__domain');
 const $upload = $('.try__req__upload');
 
 const $imgContainer = $('.try__img');
+const $loader = $('.bouncing-loader');
 const $jsonContainer = $('.try__json');
 const $jsonPayload = $('.payload');
 
@@ -56,6 +57,10 @@ $goBtn.click(() => {
         let primaryOption = `${$(".try__req__url__path1 option:selected").text()}`;
         let secondaryOption = `${$(".try__req__url__path2 option:selected").text()}`;
 
+        $loader.removeClass('u-remove');
+        $jsonContainer.addClass('u-remove');
+        $imgContainer.addClass('u-remove');
+
         getImage(primaryOption, secondaryOption);
 
     }
@@ -64,6 +69,7 @@ $goBtn.click(() => {
         let fd = new FormData();
         fd.append('photo', file, file.name);
 
+        $loader.removeClass('u-remove');
         $imgContainer.addClass('u-remove');
         $goBtn.addClass('btn--disabled');
 
@@ -160,12 +166,14 @@ function getStatus(url) {
                 setTimeout(getStatus(url), 1000);
             }
             else if(status==='rejected') {
+                $loader.addClass('u-remove');
                 let render = stringify(res);
                 $jsonPayload.html(render);
                 $jsonContainer.removeClass('u-remove');
             }
             else {
                 getImage('id', res.message.id);
+                $loader.addClass('u-remove');
             }
 
         },
@@ -200,6 +208,7 @@ function getImage(primaryOption, secondaryOption) {
         },
         complete:  () => {
             $jsonContainer.removeClass('u-remove');
+            $loader.addClass('u-remove');
         }
     });
 }
@@ -222,6 +231,7 @@ function postImage(fd) {
             console.log(`Error: ${stringify(err)}`);
             let render = stringify(err.responseJSON);
             $jsonPayload.html(render);
+            $loader.addClass('u-remove');
             $jsonContainer.removeClass('u-remove');
         }
     });
