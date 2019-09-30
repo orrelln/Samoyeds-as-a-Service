@@ -188,7 +188,8 @@ function getImage(primaryOption, secondaryOption) {
         url: `/${primaryOption}/${secondaryOption}`,
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         success: (res) => {
-            res.message[0].link = res.message[0].link.replace("http://", "")
+            res.message[0].link = res.message[0].link.replace("http://", "");
+            res.message[0].link = res.messahe[0].link.replace("www.", "");
             let cleanedResponse = stringify(res);
             $('.res_image').attr('src', `https://${res.message[0].link}`);
             cleanedResponse = cleanedResponse.replace(
