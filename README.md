@@ -1,2 +1,2 @@
 # Samoyeds-as-a-Service
-https://samyoeds.cc
+https://samoyeds.cc
